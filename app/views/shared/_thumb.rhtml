@@ -1,0 +1,35 @@
+<%  tag_max = 6; %>
+<div class="tback">
+  <div class="twrap">
+    <div class="ttitle"><%= link_to("#{stack.line.name} - #{stack.line.gene}", :controller => 'stack', :action => 'show', :id => stack) %></div>
+    <div class="tleft">
+      <div class="timage">
+        <%= link_to(image_tag("#{DATA_IMAGE_FOLDER}#{stack[:name]}/thumb2.jpg", :alt => stack.name, :title => stack.name, :class => 'timg'), :controller => 'stack', :action => 'show', :id => stack) %>
+      </div>
+      <div class="tname">
+        <%= link_to(stack[:name], :controller => 'stack', :action => 'show', :id => stack) %>
+      </div>
+    </div>
+    <div class="tinfo">
+      <ul class="small">
+        <%
+        tags = stack.tags.find(:all, 4, :conditions => "active = true")
+        if tags.length > tag_max
+          tags = tags [0..tag_max-1]
+          tags[tag_max-1].tag = '+ more'
+        end
+        for tag in tags[0..tag_max-1]
+        %>
+          <li class="small">
+            <%= tag.tag[0,15] + (tag.tag.length > 15 ? '...' : '') %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+    <!--div class="tlinks">
+      <%#= link_to("medium", :controller => 'stack', :action => 'show', :id => stack) %> |
+      <%#= link_to("large", :controller => 'stack', :action => 'show', :id => stack, :size => '768') %> |
+      <%#= link_to("full", :controller => 'stack', :action => 'show', :id => stack, :size => 'full') %>
+    </div-->
+  </div>
+</div>

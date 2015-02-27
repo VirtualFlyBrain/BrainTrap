@@ -1,0 +1,29 @@
+<project>
+
+    <target name="clean">
+        <exec command="java">
+          <arg value="-classpath"/>
+          <arg value="precompiled/fake"/>
+          <arg value="Fake"/>
+          <arg value="clean"/>
+        </exec>
+    </target>
+
+    <target name="build">
+        <exec command="java">
+          <arg value="-classpath"/>
+          <arg value="precompiled/fake"/>
+          <arg value="Fake"/>
+        </exec>
+    </target>
+
+    <target name="run">
+        <exec command="java">
+          <arg value="-classpath"/>
+          <arg value="precompiled/fake"/>
+          <arg value="Fake"/>
+          <arg value="run"/>
+        </exec>
+    </target>
+
+</project>

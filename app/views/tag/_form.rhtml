@@ -1,0 +1,39 @@
+<div id="stackarea" class="stack">
+  <%= render(:partial => "shared/stack") %>
+</div>
+
+<div class="breaker"></div>
+
+<div class="tagedit">
+  <div class="tagarea">
+  <%= error_messages_for 'tag' %>
+
+  <!--[form:tag]-->
+  <p><label for="tag_tag">EnterZ text to describe this area:</label></p>
+  <p>
+  <%= text_area 'tag', 'tag', :cols => 40, :rows => 5, :onclick => "setCursorPos()",
+      :onchange => "setCursorPos();handleKeyEvent(event)",
+      :onkeyup => "setCursorPos();handleKeyEvent(event)",
+      :class => 'taginput' %></p>
+  </div>
+  <div class="completions-list">
+    <p>
+      Select a completion:
+    </p>
+    <div id="completion-prefix">
+    </div>
+    <div id="completions" class="completions-scroll">
+    </div>
+  </div>
+
+  <%= hidden_field 'tag', 'stack_id'  %></p>
+  <%= hidden_field 'tag', 'image_num'  %></p>
+  <%= hidden_field 'tag', 'x_offset'  %></p>
+  <%= hidden_field 'tag', 'y_offset'  %></p>
+  <%= hidden_field 'tag', 'created_at'  %></p>
+  <%= hidden_field 'tag', 'updated_at'  %></p>
+  <!--[eoform:tag]-->
+  
+</div>
+
+<div class="breaker"></div>

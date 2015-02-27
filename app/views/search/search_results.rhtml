@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <%= stylesheet_link_tag 'style' %>
+    <title>BrainTrap - Anatomy Ontology Search Results</title>
+    <link rel="shortcut icon" href="/braintrap/favicon.ico" />
+  </head>
+  <body>
+    <div class="rbody">
+      <div class="head">
+        <%= render(:partial => "shared/head") %>
+      </div>
+
+      <div class="maintext">
+        <p style="color: green"><%= flash[:notice] %></p>
+        <h2>Search results
+          <% if @stack_pages != nil %>
+            (Page <%= @stack_pages.current.number %> of <%= @stack_pages.length%>)
+          <% else if @stacks != nil %>
+              ( <%= @stacks.length %> matching image<%= @stacks.length == 1 ? '' : 's' %> )
+            <% end end %>
+        </h2>
+
+        <% if params[:mode] == 'freetext' %>
+          <p>
+            <% form_tag_in_block(:action => url_for(:controller => 'search', :action => 'search_results')) { %>
+              <input name="quick_search" type="text" value="<%= params[:quick_search] %>" class="quicksearch" size="50" />
+              <input type="hidden" name="mode" value="freetext" />
+              <!--Match:
+                  <input type="radio" name="match" value="all" checked /> All terms
+                  <input type="radio" name="match" value="any" /> Any terms-->
+              <input type="submit" value="Search" />
+            <% } %>
+          </p><br/>
+        <% else %>
+          <p><%= @search_list %></p>
+        <% end %>
+        
+        <% if @stacks != nil %>
+
+          <table class="grid" cellspacing="1" cellpadding="0">
+            <tr>
+              <th>Preview</th>
+              <th>Name</th>
+              <th>Line</th>
+              <th>Gene</th>
+              <th>Tags</th>
+              <th colspan="1"></th>
+            </tr>
+
+            <% for stack in @stacks %>
+              <tr class="<%= cycle("even", "odd") %>">
+                <td><%= link_to(image_tag("#{DATA_IMAGE_FOLDER}#{stack[:name]}/thumb2.jpg", :class => 'thumb'), :controller => 'stack', :action => 'show', :id => stack) %></td>
+                <td><%= stack[:name]%></td>
+                <td><%= stack.line[:name]%></td>
+                <td><%= stack.line[:gene]%></td>
+                <td>
+                  <ul class="small">
+                    <% for tag in stack.tags %>
+                      <% if tag.active %>
+                        <li class="small">
+                          <%= tag.tag[0,30] + (tag.tag.length > 30 ? '...' : '') %>
+                        </li>
+                      <% end %>
+                    <% end %>
+                  </ul>
+                </td>
+
+                <td><%= link_to 'View', :controller => 'stack', :action => 'show', :id => stack %></td>
+                <%#td><%= link_to 'Edit', :action => 'edit', :id => stack % ></td%>
+
+                <%#td><%= link_to 'Destroy', { :action => 'destroy', :id => stack }, :confirm => 'Are you sure?', :method => :post % ></td%>
+
+              </tr>
+            <% end %>
+          </table>
+
+        <% end %>
+
+      </div>
+
+      <div class="foot">
+        <%= render(:partial => "shared/foot") %>
+      </div>
+
+    </div>
+<%= render(:partial => "shared/track") %>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+<h2>Line details</h2>
+
+<p>
+  <b>Name:</b> <%=h @line.name %>
+</p>
+<p>
+  <b>Comments:</b> <%=h @line.comments %>
+</p>
+
+<p>
+  <b>Links:</b>
+  <%= link_to_flyprot_cpti @line.name  %> |
+  <%= link_to_kyoto @line.name %>
+</p>
+
+<p>
+  <b>Genes trapped:</b>
+</p>
+<table class="grid" cellspacing="1" cellpadding="0">
+  <tr>
+    <th>Gene name</th>
+    <th>Gene ID</th>
+    <th colspan="1"></th>
+  </tr>
+
+  <% for gene in @line.genes %>
+    <tr class="<%= cycle("even", "odd") %>">
+      <td><%=gene['gene']%></td>
+      <td><%=gene['geneid']%></td>
+      <td nowrap><%= link_to_flybase_fbgn gene.genefbgn %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p>
+  <b>Images:</b>
+</p>
+<div class="breaker"></div>
+<%# Display as a grid%>
+<% for stack in @stacks %>
+  <%= render(:partial => "shared/thumb", :locals => {:stack => stack}) %>
+<% end %>
+<div class="breaker"></div>
+
+<br/><br/><br/>
+<%#= link_to 'Edit', :action => 'edit', :id => @line %>
+<%= link_to 'View All Lines', :action => 'list' %> |
+<%= link_to "Download #{@line.name} annotation XML", :controller => 'feed', :action => 'line_annotation_xml', :id => @line.id %>

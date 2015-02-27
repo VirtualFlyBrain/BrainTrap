@@ -1,0 +1,61 @@
+<div class="maintext">
+
+  <h2>Fly Brain Protein Trap Database</h2>
+  <!--p>Provided and maintained by <a href="mailto:seymour.kb@ed.ac.uk">Seymour Knowles-Barley</a>.</p-->
+
+  <div class="text">
+    <p>
+      This database contains information on protein expression in the
+      <i>Drosophila melanogaster</i> brain.
+      It consists of a collection of 3D confocal datasets taken from EYFP expressing protein trap
+      Drosophila lines from the Cambridge Protein Trap project.
+	  Further details including analysis and discussion of the results are available in the open access publication
+	  <%= external_link_to('BrainTrap: a database of 3D protein expression patterns in the <i>Drosophila</i> brain', 'http://database.oxfordjournals.org/content/2010/baq005.full') %>.
+    </p>
+
+    <p>
+      Currently there are <%= @totalimages %> brain scans from <%= @totallines %> protein trap lines in the database.
+    </p>
+
+    <p>
+      To get started you can:
+      <ul>
+        <li>
+          <%= link_to 'Search protein trap data', :controller => 'search' %>
+          for proteins that express in specific brain regions.
+        </li>
+        <li>
+          <%= link_to 'List trapped genes', :controller => 'gene', :action => 'list' %>
+          to view all protein trap lines.
+        </li>
+        <li>
+          <%= link_to 'List all protein trap lines', :controller => 'line', :action => 'list' %>
+          currently in the database.
+        </li>
+        <li>
+          <%= link_to 'List all images', :controller => 'stack', :action => 'list' %>
+          currently in the database.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      Other relevant collections:
+      <ul>
+        <li>
+          <%= link_to 'www.fly-trap.org', 'http://www.fly-trap.org', :target => '_blank' %> - Edinburgh brain enhancer-traps
+        </li>
+        <li>
+          <%= link_to 'flytrap.med.yale.edu', 'http://flytrap.med.yale.edu/', :target => '_blank' %> - protein trap collection at Yale
+        </li>
+      </ul>
+    </p>
+
+  </div>
+  
+</div>
+
+<div class="mainresults">
+  <div class="mainresulthead">Highlights:</div>
+  <%= render(:partial => "shared/highlights") %>
+</div>

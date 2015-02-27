@@ -1,0 +1,35 @@
+<div class="taglist">
+  <% if @stack.tags.length > 0 %>
+    <table class="grid" cellspacing="1" cellpadding="0">
+      <tr>
+        <th>Anatomy Tags</th>
+      </tr>
+
+      <% for tag in @stack.tags %>
+        <% if tag[:active] %>
+          <tr>
+            <td>
+              <%= radio_button 'tag', 'id', tag[:id], :onclick => "toggleRad(this, #{tag[:id]}, #{Integer(tag[:image_num])}, #{tag[:x_offset]}, #{tag[:y_offset]});" if tag[:image_num]!=nil %>
+              <%= label_tag "tag_id_#{tag[:id]}", tag.send('tag'), :class => 'tag_label' %>
+            </td>
+            <% if logged_in? %>
+              <td>
+                <%=h tag.user[:login] %>
+              </td>
+              <%#td><%= link_to 'Show', :controller => 'tag',  :action => 'show', :id => tag %-></td%>
+              <% if tag[:user_id] == current_user[:id] or current_user.admin %>
+                <td><%= link_to 'Edit', :controller => 'tag', :action => 'edit', :id => tag %></td>
+                <td><%= link_to 'Destroy', { :controller => 'tag', :action => 'destroy', :id => tag }, :confirm => 'Are you sure?', :method => :post %></td>
+              <% end %>
+            <% end %>
+          </tr>
+        <% end %>
+      <% end %>
+    </table>
+  <% else %>
+    <p> No tags to display </p>
+  <% end%>
+  <% if logged_in? %>
+    <%= link_to 'New tag', {:controller => 'tag', :action => 'new', :tag_stack_id => @stack}, :onclick => 'linkjump(this);return false;' %>
+  <% end %>
+</div>

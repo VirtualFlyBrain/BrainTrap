@@ -1,0 +1,31 @@
+<%= error_messages_for 'stack' %>
+
+<!--[form:stack]-->
+<p><label for="stack_line_id">Line</label><br/>
+<%= select("stack", "line_id", Line.find(:all).collect{|l| [l.name, l.id] }.sort) %></p>
+
+<p><label for="stack_name">Name</label><br/>
+<%= text_field 'stack', 'name'  %></p>
+
+<p><label for="stack_num_images">Num images</label><br/>
+<%= text_field 'stack', 'num_images'  %></p>
+
+<p><label for="stack_max_res_x">Max res x</label><br/>
+<%= text_field 'stack', 'max_res_x'  %></p>
+
+<p><label for="stack_max_res_y">Max res y</label><br/>
+<%= text_field 'stack', 'max_res_y'  %></p>
+
+<p><label for="stack_has_med_res">Has med res</label><br/>
+<select id="stack_has_med_res" name="stack[has_med_res]"><option value="false" selected>False</option><option value="true">True</option></select></p>
+
+<p><label for="stack_has_hi_res">Has hi res</label><br/>
+<select id="stack_has_hi_res" name="stack[has_hi_res]"><option value="false" selected>False</option><option value="true">True</option></select></p>
+
+<p><label for="stack_comments">Comments</label><br/>
+<%= text_area 'stack', 'comments'  %></p>
+
+<p><label for="stack_dateadded">Dateadded</label><br/>
+<%= date_select 'stack', 'dateadded'  %></p>
+<!--[eoform:stack]-->
+

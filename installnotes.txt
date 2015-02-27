@@ -1,0 +1,47 @@
+#Actions required for installation
+
+-- JRuby Version 1.1.4 or greater
+-- Rails Version 2.1.0 or greater
+
+-- Set PostgreSQL details in database.yml
+
+gem install activerecord-jdbcpostgresql-adapter
+
+#Also this if you get irritating messages
+gem install jruby-openssl
+
+-- Set site-images directory in environment.rb (DATA_IMAGE_FOLDER = 'http://localhost/data/')
+
+-- Set apache settings if necessary:
+#Cmor
+#This links apache to glassfish and adds the data directory
+
+#This is the image data directory
+
+Alias /data "C:/dev/site-images"
+<Directory "C:/dev/site-images">
+    AllowOverride None
+    Options None
+    Order allow,deny
+    Allow from all
+</Directory>
+
+#This links to the glassfish server
+
+#AddModule mod_proxy.c
+#Or with .so files:
+LoadModule proxy_module modules/mod_proxy.so
+#LoadModule proxy_ajp_module modules/mod_proxy_ajp.so
+#LoadModule proxy_balancer_module modules/mod_proxy_balancer.so
+#LoadModule proxy_connect_module modules/mod_proxy_connect.so
+#LoadModule proxy_ftp_module modules/mod_proxy_ftp.so
+LoadModule proxy_http_module modules/mod_proxy_http.so
+
+<VirtualHost flyhome:80>
+
+    ServerName flyhome
+
+    ProxyPass /BrainTrap/ http://localhost:8080/BrainTrap/
+    ProxyPassReverse /BrainTrap/ http://localhost:8080/BrainTrap/
+
+</VirtualHost>

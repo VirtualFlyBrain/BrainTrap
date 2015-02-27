@@ -1,0 +1,22 @@
+<h2>Comparing trapped genes</h2>
+
+<p>
+
+<table class="grid" cellspacing="1" cellpadding="0">
+  <tr>
+    <th>&nbsp;</th>
+	<% for gene in @genes %>
+    <th><%=gene['gene']%></th>
+    <% end %>
+  </tr>
+  <% for anat in @anatomy %>
+  <tr class="<%= cycle("even", "odd") %>">
+  	<td><%= anat %></td>
+	<% for gene in @genes %>
+    <td align="center"><%= @tagged[anat].key?(gene['gene']) ? '&#10003;' : '' %></td>
+    <% end %>
+  </tr>
+  <% end %>
+</table>
+
+<p>

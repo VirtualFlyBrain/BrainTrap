@@ -1,0 +1,150 @@
+/* 
+Document   : style
+Created on : 08-Jun-2009, 14:49:32
+Author     : Cmor
+Description:
+Purpose of the stylesheet follows.
+*/
+
+/* 
+TODO customize this sample style
+Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+/* General settings */
+
+* {font-family: verdana, arial, helvetica, sans-serif;}
+
+body {text-align: left; margin:0px; height:100%; background-color: #ccc; background-image:url('../images/stripe6.png');
+    font-size:15px;}
+
+a { text-decoration:none; color: #7777ff; }
+a:hover { text-decoration:none; color: #4444ff; }
+
+div.breaker {clear:both}
+
+img {border:0}
+
+input[type="text"], select {background:#000; color:#ccc; border:solid 1px #666;}
+input[type="submit"], input[type="button"], input[type="reset"] {color: #77f; background-color: #000; border: 1px solid #666; padding 1px; cursor:pointer; height:28px; font-size:15px;}
+input[type="submit"]:hover, input[type="button"]:hover, input[type="reset"]:hover {color: #99f; background-color: #000; border: 1px solid #aaa; padding 5px; cursor:pointer; height:28px; font-size:15px;}
+
+/* Overall Layout */
+div.lmargin {float:left; width:30px; height:100%; margin-right:20px;
+    background-color:#999; border-right:1px solid #000;}
+
+div.rbody {margin: 0px auto 0px auto; border-left:1px solid #000; padding: 0px 10px 10px 10px; min-width:790px; max-width:900px; background-color:#111; color:#aaa}
+div.rbody-768 { min-width:790px; max-width:1110px; }
+div.rbody-full { min-width:790px; max-width:none; }
+
+div.headtl {background:url('../images/corner_tl.png') no-repeat top left;}
+div.headtr {background:url('../images/corner_tr.png') no-repeat top right;}
+div.headbl {background:url('../images/corner_bl.png') no-repeat bottom left;}
+div.headbr {background:url('../images/corner_br.png') no-repeat bottom right;}
+
+
+/* Header and Footer */
+
+/* Blue header
+div.head {margin: 0px; padding:10px; background-color:#115; color:#aaa; font-weight:bold;}
+*/
+
+div.head {margin: 0px; padding:5px; background-color:#111; color:#aaa; font-weight:bold;}
+div.contactr {float:right; font-size:small; padding:10px; text-align:right;}
+div.menu { border-width: 1px 0px 1px 0px; border-style: solid; border-color: #fff; }
+
+/* blue footer
+div.foot {margin: 50px 0px 0px 0px; padding:10px; background-color:#115; color:#aaa; font-weight:bold;}
+*/
+div.foot {margin: 50px 0px 10px 0px; padding:10px; background-color:#111; color:#aaa; font-weight:normal; font-size:small;
+     border-width: 1px 0px 0px 0px; border-style: solid; border-color: #fff; }
+div.footl{float:left;}
+div.footr{float:right;}
+
+img.logoimg{float:left;margin:10px 0px 10px 10px;}
+div.elogo{float:right;margin:0px 0px 7px 5px;}
+img.elogo{float:right;vertical-align:top;}
+div.head h1 {margin:0px; padding: 10px 10px 10px 10px; float:left; top:0; font-size:30px; font-weight:bold;
+    font-family:Georgia, serif; color:#fff;}
+div.head ul {margin:0px; padding:0px; height:40px;}
+div.head ul li {float:left; margin:10px; padding:10px; list-style-type:none; top:-10px; position:relative;}
+
+/* central area */
+div.maintext{width:750px; margin:10px;}
+div.maintext-hr{margin:0px; padding:0px; border-top:1px solid #fff;}
+div.maintext h2{margin:13px 0px 7px 0px;}
+div.mainresults{margin: 0px;}
+div.mainresults-small{margin: 0px;font-size:small;}
+div.mainresulthead{margin:20px 10px 5px 10px; font-weight:bold;}
+
+/* Thumbnail box settings */
+/*div.twrap {float:left; border: 1px solid #555; padding:5px; margin:3px; background-color:#333; color:#fff;
+    width:280px;height:130px;}*/
+div.tback{float:left;padding:0px;margin:8px;width:280px;height:130px;
+        background-color:#000;background-image:url('../images/tback3.png'); background-repeat:no-repeat;}
+div.twrap {padding:5px;margin:0px;color:#fff;width:280px;height:130px;}
+div.ttitle {font-weight:normal;padding:2px;}
+div.tleft {float:left; width:138px; height:120px;}
+div.timage {float:left; width:128px; height:75px; padding:2px; overflow:hidden;}
+div.tinfo {float:left; width:132px; height:120px; padding:2px; font-size:14px;}
+div.tname {float:left; width:128px; height: 40px; padding:2px; font-size:smaller; white-space:nowrap;}
+div.tlinks {float:left; width:132px; height: 40px; padding:2px; font-size:smaller;}
+ul.small {margin:0px;padding:0px;}
+li.small {font-size:smaller;list-style:inside;overflow:hidden;white-space:nowrap}
+img.timg {border:0;max-height:75px;max-width:128px;}
+
+/* General table styles - for search results and lists */
+table.grid {border: 1px solid #444;}
+table.grid th {padding:5px; margin:0px; color:#eee;}
+table.grid tr td {padding:5px; margin:0px; background-color:#222; color:#aaa;}
+table.grid tr.even td {padding:5px; margin:0px; background-color:#222; color:#aaa;}
+table.grid tr.odd td {padding:5px; margin:0px; background-color:#111; color:#aaa;}
+
+/* Search home */
+ul.searchlinks{padding-left:20px;}
+ul.searchlinks li{ margin:10px; }
+
+/* MultiBrain */
+input.mbradio {width:50px;height:50px;cursor:pointer;}
+
+/* Image Viewer - slider settings */
+div.slice-512{float:left;margin: 10px 0px 10px 16px;}
+div.slice-768{float:left;margin: 10px;}
+div.slice-full{float:left;margin: 10px;}
+div#iviewOptions span{margin-left:16px;}
+div#iviewOptions span.selected{margin-left:0px;color:#fff;}
+span#slice-number-caption{margin-left:16px;}
+#all-slider-controls {font-size:small;width:900px;margin-top:5px;}
+#scanslidewrapper {float:left;width:324px;margin: 2px 5px;}
+#stopAuto {margin-left:5px;margin-right:3px;}
+#scansliderbg {float:left;position:relative;top:4px;background: url(../images/slider/bg-fader-longer.png);height: 28px;width: 324px;}
+#scansliderthumb {position: absolute;top: 4px;}
+#spinner {float:left;width:16px;padding-top:8px;padding-right:2px;}
+img#scanimage {border: 1px solid #222; margin:0px;}
+canvas#scancanvas {border: 1px solid #222; margin:0px;}
+canvas.multistack-512{width: 512px; height: 250px;}
+canvas.multistack-768{width: 768px; height: 375px;}
+canvas.multistack-full{width: 1048px; height: 512px;}
+
+div.taglist {float:left;max-width:299px;margin:10px;}
+
+/* Image Viewer - buttons */
+.slider-buttonsl {float:left;width:115px;padding-top: 5px;}
+.slider-buttonsr {float:left;width:440px;padding-top: 5px;}
+/* Image Viewer - targetcircle */
+img.circle{position:absolute;top:0;left:0;visibility:hidden;z-index:2;}
+label.tag_label:hover{color:#fff;}
+/* Image Viewer - tag edit */
+div.tagedit{width:740px;}
+div.tagarea{float:left;width:400px;height:300px;}
+textarea.taginput{height:220px;}
+div.completions-list{width:330px; height:300px; float:left; margin-left:10px;}
+div.completions-scroll{width:330px; height:220px; overflow:auto;}
+
+/* Quick Search */
+input.quicksearch {background:#ddd;border-style:solid;color:#000;}
+
+/* About */
+img.epsrc {background-color:#111;height:120px;padding:0px;margin:20px 0px;}
+img.yfp_ihc {float:right;width:400px;margin:20px;}
+img.yfp_piggybac {float:right;width:500px;margin:20px;}

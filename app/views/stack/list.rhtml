@@ -1,0 +1,85 @@
+<% if @gene %>
+<h2>Listing images for gene <%= @gene.gene %> (page <%= @page %> of <%= @npages %>)</h2>
+<% elsif @line %>
+<h2>Listing images line <%= @line.name %> (page <%= @page %> of <%= @npages %>)</h2>
+<% else %>
+<h2>Listing images (page <%= @page %> of <%= @npages %>)</h2>
+<% end %>
+
+<%#= link_to 'New stack', :action => 'new' if current_user.admin %>
+<%#= link_to 'Auto new stack', :action => 'autonew' if current_user.admin %>
+
+<p>
+
+Order by:
+<%= @order == "date" ? "date" : link_to('date', :order => 'date', :show => params[:show]) %>
+<%= @order == "gene" ? "gene" : link_to('gene', :order => 'gene', :show => params[:show]) %>
+<%= @order == "line" ? "line" : link_to('line', :order => 'line', :show => params[:show]) %>
+
+&nbsp; Show:
+<%= @show == "45" ? "45" : link_to('45', :show => "45", :order => params[:order]) %>
+<%= @show == "90" ? "90" : link_to('90', :show => "90", :order => params[:order]) %>
+<%= @show == "all" ? "all" : link_to('all', :show => "all", :order => params[:order]) %>
+
+</p><p>
+	
+<%= render(:partial => "shared/pagelinks") %>
+
+</p>
+
+<% if @table %>
+  <%# Display as a table%>
+<table class="grid" cellspacing="1" cellpadding="0">
+  <tr>
+    <th>Preview</th>
+    <th>Name</th>
+    <th>Gene</th>
+    <th>Line</th>
+    <th>Tags</th>
+    <th colspan="1"></th>
+  </tr>
+  
+<% for stack in @stacks %>
+  <tr class="<%= cycle("even", "odd") %>">
+    <td><%= link_to(image_tag("#{DATA_IMAGE_FOLDER}#{stack[:name]}/thumb2.jpg", :class => 'thumb'), :action => 'show', :id => stack) %></td>
+    <td><%= stack[:name]%></td>
+    <td><%= stack.line[:gene]%></td>
+    <td><%= stack.line[:name]%></td>
+    <td>
+      <ul class="small">
+        <% for tag in stack.tags %>
+          <% if tag.active %>
+          <li class="small">
+            <%= tag.tag[0,30] + (tag.tag.length > 30 ? '...' : '') %>
+          </li>
+          <% end %>
+        <% end %>
+      </ul>
+    </td>
+
+    <td><%= link_to 'View', :action => 'show', :id => stack %></td>
+    <%#td><%= link_to 'Edit', :action => 'edit', :id => stack % ></td%>
+
+    <%#td><%= link_to 'Destroy', { :action => 'destroy', :id => stack }, :confirm => 'Are you sure?', :method => :post % ></td%>
+
+  </tr>
+<% end %>
+</table>
+
+<% else %>
+<div class="breaker"></div>
+<%# Display as a grid%>
+<% for stack in @stacks %>
+    <%= render(:partial => "shared/thumb", :locals => {:stack => stack}) %>
+<% end %>
+<div class="breaker"></div>
+<% end %>
+
+<p>
+
+<%= render(:partial => "shared/pagelinks") %>
+
+</p>
+
+<%#= link_to 'New stack', :action => 'new' if current_user.admin %>
+<%#= link_to 'Auto new stack', :action => 'autonew' if current_user.admin %>

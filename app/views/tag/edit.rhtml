@@ -1,0 +1,13 @@
+<p><b>Editing tag:</b> Please select an image in the stack and click on it to highlight a location for your tag. </p>
+
+<script language="javascript">
+  circleedit = true;
+</script>
+
+<% form_tag :action => 'update', :id => @tag do %>
+  <%= render :partial => 'form' %>
+  <%= submit_tag 'Edit' %>
+<% end %>
+
+<%#= link_to 'Show', :action => 'show', :id => @tag %>
+<%= link_to 'Back', :controller => 'stack', :action => 'show', :id => @tag[:stack_id] %>

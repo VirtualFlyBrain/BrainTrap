@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <title>BrainTrap - Stack: <%= controller.action_name %></title>
+    <link rel="shortcut icon" href="/braintrap/favicon.ico" />
+    <%= stylesheet_link_tag 'style' %>
+
+    <!-- Individual YUI JS files -->
+    <%= javascript_include_tag 'yui/yahoo-dom-event/yahoo-dom-event.js' %>
+    <%= javascript_include_tag 'yui/dragdrop/dragdrop-min.js' %>
+    <%= javascript_include_tag 'yui/slider/slider-min.js' %>
+
+    <%= javascript_include_tag 'multistack2.js' %>
+
+    <script type="text/javascript">
+      var channelMap = <%= @channelMap.to_json %>;
+      var numberofChannels = <%= @channelMap.length.to_json %>;
+      var circleedit = false;
+      var image_dir = <%= @img_dir.to_json %>
+      var stack_depth = <%= @stack[:num_images].to_json %>
+      var imagesDirectoryExternal = '<%= "#{DATA_IMAGE_FOLDER}multistack2/" %>';
+      var sizestr = '<%= @size %>';
+      var numberOfChannels = channelMap.length;
+      var jumpMult = <%= @jumpMult %>;
+	  var invert = <%= @invert %>;
+	  var cmy = <%= @cmy %>;
+<% if (@jumpto != nil) %>
+    var jumpto = <%= @jumpto %>;
+  <% if (@circleX != nil) && (@circleY != nil) %>
+      var circleX = <%= @circleX %>;
+      var circleY = <%= @circleY %>;
+  <% end %>
+<% end %>
+
+    </script>
+
+  </head>
+  <body onload="stackPageLoaded();">
+
+    <div class="rbody<%= " rbody-#{@size}" unless @size == '512' %>">
+      <div class="head">
+        <%= render(:partial => "shared/head") %>
+      </div>
+
+      <div class="breaker"></div>
+
+      <div class="maintext">
+        <p style="color: green"><%= flash[:notice] %></p>
+      </div>
+
+      <div class="breaker"></div>
+
+      <div class="mainresults">
+
+        <div id="stackarea" class="stack">
+          <%= render(:partial => "shared/multistack") %>
+        </div>
+
+        <p>
+          Related links:
+		  <%= link_to('link to this page', :size => params[:size], :invert => params[:invert], :c1 => params[:c1], :c2 => params[:c2], :c3 => params[:c3])%> |
+          <%= link_to @stack1.line[:name], :controller => 'line', :action => 'show', :id => @stack1[:line_id] %> |
+          <%= link_to @stack2.line[:name], :controller => 'line', :action => 'show', :id => @stack2[:line_id] %> |
+          <%= link_to @stack3.line[:name], :controller => 'line', :action => 'show', :id => @stack3[:line_id] %> |
+          <%= link_to 'MultiBrain', :action => 'multibrain' %>
+        </p>
+
+      </div>
+
+      <div class="foot">
+        <%= render(:partial => "shared/foot") %>
+      </div>
+    </div>
+
+<%= render(:partial => "shared/track") %>
+  </body>
+</html>
