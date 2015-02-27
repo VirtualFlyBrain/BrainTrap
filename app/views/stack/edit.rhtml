@@ -1,0 +1,9 @@
+<h2>Editing stack</h2>
+
+<% form_tag :action => 'update', :id => @stack do %>
+  <%= render :partial => 'form' %>
+  <%= submit_tag 'Edit' %>
+<% end %>
+
+<%= link_to 'Show', :action => 'show', :id => @stack %> |
+<%= link_to 'Back', :action => 'list' %>

@@ -1,0 +1,60 @@
+<h2>MultiBrain (beta)</h2>
+<% form_tag_in_block(:action => url_for(:controller => 'stack', :action => 'multistack')) { %>
+<p>
+	Select three images (one in each colour) and view the combined stack by clicking "View MultiBrain".<br/>
+	Can't choose? Click "Random MultiBrain" until you find something you like.<br/>
+	Brains in were registered to a common template using <%= external_link_to('CMTK', "http://www.nitrc.org/projects/cmtk/") %>.
+</p>
+<p><input type="submit" name="mButton" value="View MultiBrain" /> <input type="submit" name="random" value="Random MultiBrain" /></p>
+<table class="grid" cellspacing="1" cellpadding="0">
+  <tr>
+    <th style="color:red;width:60px;">Red</th>
+    <th style="color:green;width:60px;">Green</th>
+    <th style="color:blue;width:60px;">Blue</th>
+    <th>Preview</th>
+    <!--th>Name</th-->
+    <th>Gene</th>
+    <th>Line</th>
+    <th>Tags</th>
+  </tr>
+
+  <tr class="even">
+    <td><input type="radio" name="c1" style="width:50px;height:50px;cursor:pointer;" value="nc82" /></td>
+    <td><input type="radio" name="c2" style="width:50px;height:50px;cursor:pointer;" value="nc82" /></td>
+    <td><input type="radio" name="c3" style="width:50px;height:50px;cursor:pointer;" value="nc82" /></td>
+
+    <td><%= link_to(image_tag("#{DATA_IMAGE_FOLDER}/multistack2/2226MaleDualA-nc82/thumb2.jpg", :class => 'thumb'), :controller => 'stack', :action => 'show', :id => 559) %></td>
+    <td>brp (nc82 stain)</td>
+    <td>N/A</td>
+    <td><ul class="small"><li class="small">all neuropil areas</li></ul></td>
+  </tr>
+  
+<% for stack in @stacks %>
+  <tr class="<%= cycle("odd", "even") %>">
+    <td><input type="radio" name="c1" class="mbradio" value="<%= stack[:id] %>" /></td>
+    <td><input type="radio" name="c2" class="mbradio" value="<%= stack[:id] %>" /></td>
+    <td><input type="radio" name="c3" class="mbradio" value="<%= stack[:id] %>" /></td>
+
+    <td><%= link_to(image_tag("#{DATA_IMAGE_FOLDER}/multistack2/#{stack[:name]}/thumb2.jpg", :class => 'thumb'), :controller => 'stack', :action => 'show', :id => stack) %></td>
+    <!--td><%= stack[:name]%></td-->
+    <td><%= stack.line[:gene]%></td>
+    <td><%= stack.line[:name]%></td>
+    <td>
+      <ul class="small">
+        <% for tag in stack.tags %>
+          <% if tag.active %>
+          <li class="small">
+            <%= tag.tag[0,30] + (tag.tag.length > 30 ? '...' : '') %>
+          </li>
+          <% end %>
+        <% end %>
+      </ul>
+    </td>
+  </tr>
+<% end %>
+
+<% } %>
+
+</table>
+<p><input type="submit" name="mButton" value="View MultiBrain" /> <input type="submit" name="random" value="Random MultiBrain" /></p>
+</form>

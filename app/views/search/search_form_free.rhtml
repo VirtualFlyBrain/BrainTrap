@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <%= stylesheet_link_tag 'style' %>
+    <title>BrainTrap - Free Text Search</title>
+    <link rel="shortcut icon" href="/braintrap/favicon.ico" />
+    <%= javascript_include_tag 'predict-search.js' %>
+
+  </head>
+  
+  <body>
+
+    <%= render(:partial => "shared/head") %>
+
+    <div class="mainwrapper">
+      <div class="main">
+        <div class="header">
+          <h2>Free Text Search</h2>
+        </div>
+
+        <div class="introduction">
+
+        </div>
+
+        <div class="breaker"></div>
+
+        <div class="search-form">
+
+          <div class="search-input" onload="init()">
+            <div>
+              <form action="search_results" method="get">
+                <p>
+                  <input id="search-input" name="search-input" type="text" value=""
+                  onkeyup="searchBoxEvent(event)" />
+                  <input type="hidden" name="mode" value="freetext" />
+                </p>
+                <p>
+                  Match:
+                  <br/>
+                  <input type="radio" name="match" value="all" checked /> All terms
+                  <br/>
+                  <input type="radio" name="match" value="any" /> Any terms
+                </p>
+                <input type="submit" value="Search" />
+              </form>
+            </div>
+            <div id="search-completions">
+            </div>
+          </div>
+        </div>
+        
+        <div class="breaker"></div>
+
+        <div>
+          <br/>
+          You may also want to try:
+          <%= link_to 'untagged images', :controller => 'stack', :action => 'list', :untagged => 1 %>
+          <%= link_to 'anatomical ontology search', :controller => 'ontology', :action => 'search_form' %>
+        </div>
+      </div>
+    </div>
+<%= render(:partial => "shared/track") %>
+  </body>
+</html>

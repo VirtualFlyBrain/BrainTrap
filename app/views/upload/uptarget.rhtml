@@ -1,0 +1,10 @@
+<%#
+# To change this template, choose Tools | Templates
+# and open the template in the editor.
+%>
+Uploaded the following <%=  @filetotal  %> files
+<table>
+<% @upload_names.each do |un| %>
+<tr><td><%= un %></td></tr>
+<% end %>
+</table>

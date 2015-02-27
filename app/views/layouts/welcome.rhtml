@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <title>BrainTrap</title>
+    <link rel="shortcut icon" href="/braintrap/favicon.ico" />
+    <%= stylesheet_link_tag 'style' %>
+  </head>
+  <body>
+
+    <div class="rbody">
+      <div class="head">
+        <%= render(:partial => "shared/head") %>
+      </div>
+
+      <%=yield%>
+      
+      <div class="foot">
+        <%= render(:partial => "shared/foot") %>
+      </div>
+    </div>
+<%= render(:partial => "shared/track") %>
+  </body>
+</html>

@@ -1,0 +1,13 @@
+%A Knowles-Barley, Seymour
+%A Longair, Mark
+%A Armstrong, J Douglas
+%T BrainTrap: a database of 3D protein expression patterns in the Drosophila brain 
+%0 Journal Article
+%D 2010 
+%8 March 24, 2010 
+%J Database 
+%R 10.1093/database/baq005 
+%V 2010 
+%U http://database.oxfordjournals.org/content/2010/baq005.full 
+%X Protein-trap strains of Drosophila melanogaster provide a very useful tool for examining the 3D-expression patterns of proteins and purification of protein complexes. Here we present BrainTrap, available at http://fruitfly.inf.ed.ac.uk/braintrap, an online database of 3D confocal datasets showing reporter gene expression and protein localization in the adult brain of Drosophila. Full size images throughout the volume of the entire brain can be viewed interactively in a web browser. The database includes searchable annotations linked to the FlyBase Drosophila anatomy ontology. Anatomical search criteria can be specified using automatic completion and a hierarchical browser for the ontology. The provenance of all annotation is retained and the location where the annotator made the conclusion can be highlighted.Database URL: http://fruitfly.inf.ed.ac.uk/braintrap 
+

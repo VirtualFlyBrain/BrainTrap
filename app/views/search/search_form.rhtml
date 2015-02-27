@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <%= stylesheet_link_tag 'style' %>
+    <%= stylesheet_link_tag 'tree' %>
+    <title>BrainTrap - Anatomy Ontology Search</title>
+    <link rel="shortcut icon" href="/braintrap/favicon.ico" />
+    <%= javascript_include_tag 'predict-search.js' %>
+    <script type="text/javascript">
+      var all_nodes = <%= @all_nodes.to_json %>;
+      var collapse_nodes = <%= @collapse_nodes.to_json %>;
+      var fid_to_nodes = <%= @fid_to_nodes.to_json %>;
+      var node_parents = <%= @node_parents.to_json %>;
+      var string_to_fid = <%= @string_to_fid.to_json %>;
+    </script>
+  </head>
+
+  <body onclick="leaveSearchBox()" onload="bodyLoaded()">
+
+    <div class="rbody">
+      <div class="head">
+        <%= render(:partial => "shared/head") %>
+      </div>
+
+      <div class="maintext">
+
+        <h2>Anatomy Ontology Search</h2>
+        
+        <p style="color: green"><%= flash[:notice] %></p>
+
+        <div class="introduction">
+
+          <noscript>
+            <p><strong>Note:</strong> You need Javascript enabled for this page to work properly.</p>
+          </noscript>
+
+        </div>
+
+        <div class="breaker"></div>
+
+        <div class="search-form">
+
+          <div class="ontology-area">
+            <div id="ontology-tree">
+              <form action="search_results" method="get">
+                <div class="tree">
+                  <%= @tree_html %>
+                </div>
+                <!--a href="javascript:check_all()" >Check All</a-->
+                <a href="javascript:clear_all()" >Clear All </a>
+                <!--input type="submit" value="Tree Search" /-->
+              </form>
+            </div>
+          </div>
+
+          <div class="search-input" onload="init()">
+            <div>
+              <form action="search_results" method="get">
+                <input id="search-input" name="search-input" type="text" value=""
+                       onkeyup="searchBoxEvent(event)" />
+                <br/>
+                <!--input type="submit" value="Text Search" /-->
+                <input type="button" value="Locate" onclick="locateItem()" />
+                <input type="button" value="Add" onclick="addItem(true)" />
+                <input type="button" value="Remove" onclick="removeItem()" />
+              </form>
+            </div>
+            <div id="search-completions">
+            </div>
+            <div id="search-list">
+              <form action="search_results" method="get">
+                <select id="searchfid[]" name="searchfid[]" multiple
+                        size="10" class="search-list" onclick="selectList()">
+                </select>
+                <br/>
+                <input type="checkbox" name="subcomponents" checked >Search in subcomponents</input>
+                <br/>
+                <input type="checkbox" name="supercomponents" >Search in supercomponents</input>
+                <br/>
+                <input type="submit" value="Search" onclick="selectAll()" />
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="breaker"></div>
+
+        <div>
+          <br/>
+          You may also want to try:
+          <%= link_to 'untagged images', :controller => 'stack', :action => 'list', :untagged => 1 %>
+          <%= link_to 'free text search', :controller => 'ontology', :action => 'search_form_free' %>
+        </div>
+
+
+      </div>
+
+      <div class="foot">
+        <%= render(:partial => "shared/foot") %>
+      </div>
+    </div>
+<%= render(:partial => "shared/track") %>
+  </body>
+</html>

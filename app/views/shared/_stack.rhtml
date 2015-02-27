@@ -1,0 +1,70 @@
+<p>
+  <b>Line:</b> <%=link_to @stack.line[:name], :controller => 'line', :action => 'show', :id => @stack.line_id %>
+  <% if ! (@stack.line[:gene] == nil) %>
+    (<%= @stack.line[:gene]%>)
+  <% end %>
+  > <b>Image:</b> <%=h @stack[:name] %>
+</p>
+
+<div id="iviewOptions">
+
+  <span id="slice-number-caption"><b>Slice number:</b>
+    <input id="scantext" type="text" size="3" onkeyup="scantextchange()">
+  </span>
+
+  <span><b>Size:</b>
+    <%= @size=='512' ? '<span class="selected">medium</span>' : link_to('medium', :size => '512') %>
+    <%= @size=='768' ? '<span class="selected">large</span>' : link_to('large', :size => '768') %>
+    <%= @size=='full' ? '<span class="selected">full</span>' : link_to('full', :size => 'full') %>
+  </span>
+
+  <span id="channel"><b>Channel:</b>
+    To be replaced with channel buttons...
+  </span>
+
+</div>
+
+<div id="all-slider-controls">
+  <div id="spinner">
+    <%= image_tag('ajax-loader-black.gif', :id => 'spinner-image', :alt => 'An animated spinner to indicate loading') %>
+  </div>
+  <div class="slider-buttonsl">
+    <input type="button" value="&lt; Auto" onclick="autoimage(-1, 0, (stack_depth - 1))">
+    <input type="button" value="&lt;" onclick="moveimage(-1, 0, (stack_depth - 1))">
+  </div>
+  <div id="scansliderwrapper">
+    <div id="scansliderbg">
+      <div id="scansliderthumb"><%= image_tag('slider/thumb-n.gif', :alt => 'slider thumb') %></div>
+    </div>
+  </div>
+  <div class="slider-buttonsr">
+    <input type="button" value="&gt;" onclick="moveimage(1, 0, (stack_depth - 1))">
+    <input type="button" value="Auto &gt;" onclick="autoimage(1, 0, (stack_depth - 1))">
+    <input id="stopAuto" type="button" value="Stop" onclick="stopauto()">
+    Speed:
+    <select name="fps" id="fps">
+      <option value="unlimited">fast</option>
+      <option value="4">4fps</option>
+      <option value="1">1fps</option>
+    </select>
+  </div>
+</div>
+
+<div class="breaker"></div>
+
+<div>
+  <div id="slice-image-div" class="slice-<%= @size %>">
+    <noscript>
+      <p><strong>Note:</strong> You need Javascript enabled for this page to work properly.</p>
+    </noscript>
+    <div id="clickarea" onclick="if(circleedit) clickimage(event)">
+    <%= image_tag 'tcircle61c.png', :id => 'circle', :class => 'circle', :alt => '', :title => '' %>
+    <%= image_tag("#{DATA_IMAGE_FOLDER}#{@stack.name}/#{@size}/#{@stack.num_channels == 1 ? 'c1' : 'merge'}_#{"%03d" % (@stack.num_images / 2).floor}.jpg", :id => 'scanimage', :alt => 'A slice from the stack is shown here') %>
+    </div>
+  </div>
+
+  <%= render(:partial => "shared/taglist") %>
+  
+</div>
+
+<div class="breaker"></div>

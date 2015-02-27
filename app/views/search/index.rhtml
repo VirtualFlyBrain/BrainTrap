@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <%= stylesheet_link_tag 'style' %>
+    <%= stylesheet_link_tag 'tree' %>
+    <title>BrainTrap - Anatomy Ontology Search</title>
+    <link rel="shortcut icon" href="/braintrap/favicon.ico" />
+    <%= javascript_include_tag 'predict-search2.js' %>
+    <script type="text/javascript">
+      var all_nodes = <%= @all_nodes.to_json %>;
+      var collapse_nodes = <%= @collapse_nodes.to_json %>;
+      var fid_to_nodes = <%= @fid_to_nodes.to_json %>;
+      var node_parents = <%= @node_parents.to_json %>;
+      var string_to_fid = <%= @string_to_fid.to_json %>;
+      var image_dir = <%= @img_dir.to_json %>
+      var search_dir = <%= @search_dir.to_json %>
+    </script>
+
+  </head>
+
+  <body onclick="leaveSearchBox()" onload="bodyLoaded()">
+
+    <div class="rbody">
+      <div class="head">
+        <%= render(:partial => "shared/head") %>
+      </div>
+
+      <div class="maintext">
+
+        <p style="color: green"><%= flash[:notice] %></p>
+
+        <h2>Brain Area Search</h2>
+
+        <div class="search-form">
+
+          <div class="ontology-area">
+            <div id="ontology-tree">
+              <% form_tag_in_block(:action => url_for(:controller => 'search', :action => 'search_results')) { %>
+                <div class="tree">
+                  <%= @tree_html %>
+                </div>
+                <!--a href="javascript:check_all()" >Check All</a-->
+                <!--a href="javascript:clear_all()" >Clear All </a-->
+                <!--input type="submit" value="Tree Search" /-->
+              <% } %>
+            </div>
+          </div>
+
+          <div class="search-input" onload="init()">
+            <div>
+              <% form_tag_in_block(:action => url_for(:controller => 'search', :action => 'search_results')) { %>
+                Locate area:
+                <input id="search-input" name="search-input" type="text" value=""
+                       onkeypress="return checkEnterTree(event)" onkeyup="searchBoxEvent(event)" />
+                <input type="button" value="Locate" onclick="locateItem()" />
+                <br/>
+            <div id="search-completions">
+            </div>
+                <p>
+                  <input type="button" value="Add" onclick="addItem(true)" />
+                  <input type="button" value="Remove" onclick="removeItem()" />
+                  <input type="button" value="Clear List" onclick="clear_all()" />
+                </p>
+              <% } %>
+            </div>
+            <div id="search-list">
+              <% form_tag_in_block(:name => 'tree_search_form', :action => url_for(:controller => 'search', :action => 'search_results')) { %>
+                <select id="searchfid[]" name="searchfid[]" multiple
+                        size="10" class="search-list" onclick="selectList()">
+                </select>
+                <p>
+                <input type="checkbox" name="subcomponents" checked >Search in subcomponents</input>
+                <br/>
+                <input type="checkbox" name="supercomponents" >Search in supercomponents</input>
+                </p>
+                <input type="submit" value="Brain Area Search" onclick="selectAll()" />
+              <% } %>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="maintext-hr"></div>
+      <div class="maintext">
+        <h2> Quick Search </h2>
+
+        <p>Search for genes, anatomical areas of expression, or text tags</p>
+        <% form_tag_in_block(:name => 'quick_search_form', :action => url_for(:controller => 'search', :action => 'search_results')) { %>
+          <input name="quick_search" type="text" value="" class="quicksearch" size="50" />
+          <input type="hidden" name="mode" value="freetext" />
+          <!--Match:
+                  <input type="radio" name="match" value="all" checked /> All terms
+                  <input type="radio" name="match" value="any" /> Any terms-->
+          <input type="submit" value="Quick Search" />
+        <% } %>
+
+
+      </div>
+
+      <div class="foot">
+        <%= render(:partial => "shared/foot") %>
+      </div>
+    </div>
+<%= render(:partial => "shared/track") %>
+  </body>
+</html>

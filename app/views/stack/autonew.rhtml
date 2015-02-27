@@ -1,0 +1,25 @@
+<h2>Select a stack to auto create:</h2>
+
+<% if @line_list && @file_list && @line_list.length > 0 && @file_list.length > 0%>
+  <p>foldernum=<%= @folder_num %></p>
+
+  <% form_tag :action => 'autocreate' do %>
+
+    <p><label for="stack_line_id">Line</label><br/>
+    <%= select("stack", "line_id", @line_list) %>
+    </p>
+
+    <p><label for="stack_name">Name</label><br/>
+    <%= select("stack", "name", @file_list) %>
+    </p>
+
+    <p>
+    <%= submit_tag "Auto Create" %>
+    </p>
+
+  <% end %>
+<% else %>
+  <p>No unassigned stack folders found.</p>
+  <%= @file_list_zero.join('<br/>') %><br/>
+<% end %>
+<%= link_to 'Back', :action => 'list' %>

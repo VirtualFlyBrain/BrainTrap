@@ -1,0 +1,32 @@
+<h2>Extract Stacks</h2>
+
+<% if @started_up %>
+<p>The extractor thread has been started.</p>
+<% else %>
+<p>The extractor thread is already running.</p>
+<% end %>
+
+<p><%= $EXTRACTOR_ERROR %></p>
+
+<table class="grid" width="900" cellspacing="1" cellpadding="0">
+  <tr>
+    <th>Name</th>
+    <th>File Src</th>
+    <th>(Exists)</th>
+    <th>File Dest</th>
+    <th>(Exists)</th>
+    <th>Status</th>
+  </tr>
+  
+<% for stack in @stacks %>
+  <tr class="<%= cycle("even", "odd") %>">
+    <td><%= stack[:name]%></td>
+    <td><%= stack[:file_src]%></td>
+    <td><%= stack[:exist_src]%></td>
+    <td><%= stack[:file_dest]%></td>
+    <td><%= stack[:exist_dest]%></td>
+    <td><%= stack[:status] %></td>
+
+  </tr>
+<% end %>
+</table>

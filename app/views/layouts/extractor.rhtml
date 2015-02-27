@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <title>BrainTrap - Extractor</title>
+    <link rel="shortcut icon" href="/braintrap/favicon.ico" />
+    <%= stylesheet_link_tag 'style' %>
+    <%= stylesheet_link_tag 'scaffold' %>
+    <%= javascript_include_tag 'yahoo/yahoo-dom-event.js' %>
+    <%= javascript_include_tag 'yahoo/dragdrop.js' %>
+    <%= javascript_include_tag 'yahoo/animation.js' %>
+    <%= javascript_include_tag 'yahoo/slider.js' %>
+    <%= javascript_include_tag 'imagestack.js' %>
+    <%= javascript_include_tag 'clickimage.js' %>
+  </head>
+  <body>
+
+    <div class="rbody">
+      <div class="head">
+        <%= render(:partial => "shared/head") %>
+      </div>
+
+      <div class="maintext">
+        <p style="color: green"><%= flash[:notice] %></p>
+      </div>
+
+      <div class="mainresults-small">
+        <%= yield %>
+      </div>
+
+      <div class="foot">
+        <%= render(:partial => "shared/foot") %>
+      </div>
+    </div>
+<%= render(:partial => "shared/track") %>
+  </body>
+</html>

@@ -1,0 +1,37 @@
+<div class="taglist">
+    <table class="grid" cellspacing="1" cellpadding="0">
+    	<% mstacks = [@stack1, @stack2, @stack3]; colours = ["red", "green", "blue"];%>
+	    <% for sindex in (0..2) %>
+		  <% mstack = mstacks[sindex] %>
+		  <% if mstack.tags.length > 0 %>
+	      <tr>
+	        <th style="color:<%=colours[sindex]%>;"><%= mstack.line[:gene] == nil ? mstack.line[:name] : mstack.line[:gene] %></th>
+	      </tr>
+	
+	      <% for tag in mstack.tags %>
+	        <% if tag[:active] %>
+	          <tr>
+	            <td>
+	              <%= label_tag "tag_id_#{tag[:id]}", tag.send('tag'), :class => 'tag_label' %>
+	            </td>
+	            <% if logged_in? %>
+	              <td>
+	                <%=h tag.user[:login] %>
+	              </td>
+	              <%#td><%= link_to 'Show', :controller => 'tag',  :action => 'show', :id => tag %-></td%>
+	              <% if tag[:user_id] == current_user[:id] or current_user.admin %>
+	                <td><%= link_to 'Edit', :controller => 'tag', :action => 'edit', :id => tag %></td>
+	                <td><%= link_to 'Destroy', { :controller => 'tag', :action => 'destroy', :id => tag }, :confirm => 'Are you sure?', :method => :post %></td>
+	              <% end %>
+	            <% end %>
+	          </tr>
+	        <% end %>
+	      <% end %>
+		  
+		<% end %>
+	  <% end %>
+  </table>
+  <% if logged_in? %>
+    <%= link_to 'New tag', {:controller => 'tag', :action => 'new', :tag_stack_id => @stack}, :onclick => 'linkjump(this);return false;' %>
+  <% end %>
+</div>

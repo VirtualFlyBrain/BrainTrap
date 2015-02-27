@@ -1,0 +1,31 @@
+<h1><%= link_to(image_tag("BrainTrap-bg1.gif", :alt => 'BrainTrap', :class => 'h1img'), :controller => 'welcome' ) %></h1>
+<!--h1>BrainTrap</h1-->
+<div class="elogo"><%= link_to(image_tag("elogo-69.gif", :alt => 'The Univesity of Edinburgh', :title => 'The University of Edinburgh', :class => "elogoimg"), 'http://www.ed.ac.uk/') %></div>
+<div class="contactr">
+  Contact: <a href="mailto:seymour.kb@ed.ac.uk">Seymour Knowles-Barley</a>
+  <br/>
+  <%= link_to 'Douglas Armstrong', 'http://homepages.inf.ed.ac.uk/jda/' %>
+</div>
+<div class="breaker"></div>
+<div class="menu">
+  <ul>
+    <li><%= link_to 'Home', :controller => 'welcome' %></li>
+    <li><%= link_to 'About', :controller => 'welcome', :action => 'about' %></li>
+    <li><%= link_to 'Genes', :controller => 'gene', :action => 'list' %></li>
+    <li><%= link_to 'All Lines', :controller => 'line', :action => 'list' %></li>
+    <li><%= link_to 'All Images', :controller => 'stack', :action => 'list' %></li>
+    <li><%= link_to 'Search', :controller => 'search' %></li>
+    <li><%= link_to 'MultiBrain (beta)', :controller => 'multibrain' %></li>
+  </ul>
+</div>
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-9584428-1");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+<div class="breaker"></div>
+

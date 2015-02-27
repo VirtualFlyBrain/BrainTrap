@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <%= stylesheet_link_tag 'style' %>
+    <title>Anatomy Ontology Gene Search Results</title>
+  </head>
+  <body>
+    
+    <%= render(:partial => "shared/head") %>
+
+    <div class="mainwrapper">
+      <div class="main">
+        
+        <h2>Gene search results 
+        <% if @line_pages != nil %>
+        (Page <%= @line_pages.current.number %> of <%= @line_pages.length%>)
+        <% else if @lines != nil %>
+        ( <%= @lines.length %> matching line<%= @lines.length == 1 ? '' : 's' %> )
+        <% end end %>
+        </h2>
+
+        
+<p><%= @search_list %></p>
+
+<% if @lines != nil %>
+
+<table class="grid" cellspacing="1" cellpadding="0">
+  <tr>
+    <th>Gene Name</th>
+    <th>Gene ID</th>
+    <th>Line</th>
+    <th>Comments</th>
+    <th colspan="1"></th>
+  </tr>
+  
+<% for line in @lines %>
+  <tr>
+    <td><%= line[:gene]%></td>
+    <td><%= line[:geneid]%></td>
+    <td><%= line[:name]%></td>
+    <td><%= line[:comments]%></td>
+
+    <td><%= link_to 'Images', :controller => 'stack', :stack_line_id => line %></td>
+    <%#td><%= link_to 'Edit', :action => 'edit', :id => line % ></td%>
+    <%#td><%= link_to 'Destroy', { :action => 'destroy', :id => line }, :confirm => 'Are you sure?', :method => :post % ></td%>
+
+  </tr>
+<% end %>
+</table>
+
+<% end %>
+        </div>
+
+      </div>
+    </div>
+  </body>
+</html>
