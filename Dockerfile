@@ -5,7 +5,7 @@ FROM ruby:$RUBY_VERSION
 ARG PG_MAJOR=10
 ARG NODE_MAJOR=11
 ARG BUNDLER_VERSION=2.0.2
-ARG YARN_VERSION
+ARG YARN_VERSION=1.21.1
 
 # Add PostgreSQL to sources list
 RUN curl -sSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
