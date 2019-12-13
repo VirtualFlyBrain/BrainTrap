@@ -47,7 +47,11 @@ RUN gem update --system && \
     gem install bundler:$BUNDLER_VERSION
     
 RUN gem install rails -v 2.1.0 && \
-    gem install fcgi pg 
+    gem install fcgi pg
+    
+RUn mkdir -p /disk/data/ && \
+    cd /disk/data/ && \
+    git clone -b docker https://github.com/VirtualFlyBrain/BrainTrap.git
 
 # Create a directory for the app code
 RUN mkdir -p /app
