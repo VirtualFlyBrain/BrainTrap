@@ -45,6 +45,9 @@ ENV PATH /app/bin:$BUNDLE_BIN:$PATH
 # Upgrade RubyGems and install required Bundler version
 RUN gem update --system && \
     gem install bundler:$BUNDLER_VERSION
+    
+RUN gem install rails -v 2.1.0 && \
+    gem install fcgi pg 
 
 # Create a directory for the app code
 RUN mkdir -p /app
