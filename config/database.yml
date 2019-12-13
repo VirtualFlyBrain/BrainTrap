@@ -58,14 +58,14 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: braintrap_development
+  database: braintrap
   username: www-data
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
   # domain sockets, so uncomment these lines.
   # (Automatically uncommented by the IDE - JRuby doesn't support socket)
-  host: localhost
+  host: VirtualFlyBrain.org
   port: 5432
 
   # Schema search path. The server defaults to $user,public
