@@ -13,7 +13,7 @@
   <tr class="<%= cycle("even", "odd") %>">
   	<td><%= anat %></td>
 	<% for gene in @genes %>
-    <td align="center"><%= @tagged[anat].key?(gene['gene']) ? '&#10003;' : '' %></td>
+    <td align="center"><%= raw(@tagged[anat].key?(gene['gene']) ? '&#10003;' : '') %></td>
     <% end %>
   </tr>
   <% end %>

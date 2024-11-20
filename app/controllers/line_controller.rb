@@ -1,15 +1,9 @@
 class LineController < ApplicationController
 
-#  before_filter :login_required
-
   def index
     list
     render :action => 'list'
   end
-
-  # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
-  verify :method => :post, :only => [ :destroy, :create, :update ],
-         :redirect_to => { :action => :list }
 
   def list
     @page = (params[:page] ||= 1).to_i
@@ -19,27 +13,20 @@ class LineController < ApplicationController
     @keep_params = {};
     if params[:geneid]
       @gene = Gene.find(params[:geneid].to_i)
-      @nlines = Line.count(:all, :include => :genes, :conditions => ['genes.id = ? and lines.public = true', params[:geneid].to_i])
+      @nlines = Line.count_by_sql "select count(*) from lines left join genes_lines on (lines.id = genes_lines.line_id) where lines.public = true and genes_lines.gene_id = #{params[:geneid].to_i}"
       @npages = (@nlines / lines_per_page).ceil
-      @lines = Line.find(:all, :include => :genes, :conditions => ['genes.id = ? and lines.public = true', params[:geneid].to_i], :limit => lines_per_page, :offset => offset)
+      @lines = Line.find_by_sql "select lines.* from lines left join genes_lines on (lines.id = genes_lines.line_id) left join genes on (genes_lines.gene_id = genes.id) where lines.public = true and genes.id = #{params[:geneid].to_i} limit #{lines_per_page} offset #{offset}"
       @keep_params = {:geneid => params[:geneid]};
     else
-      @nlines = Line.count(:all, :conditions => ['lines.public = true'])
+      @nlines = Line.where(:public => true).count
       @npages = (@nlines / lines_per_page).ceil
-      @lines = Line.find(:all, :conditions => ['lines.public = true'], :order => lines_order, :limit => lines_per_page, :offset => offset)
+      @lines = Line.where(:public => true).order(lines_order).limit(lines_per_page).offset(offset)
     end
-
-#    if params[:geneid]
-#      @lines = Gene.find(params[:geneid].to_i).lines.find(:all)
-#    else
-#      @lines = Line.find(:all, :order => 'name')
-#    end
-    #@line_pages, @lines = paginate :lines, :order_by => "name", :per_page => 200
   end
 
   def show
-    @line = Line.find(params[:id], :include => :genes, :conditions => ['lines.public = true'])
-    @stacks = Stack.find(:all, :conditions => ['line_id = ? and public = true', @line.id])
+    @line = Line.where("lines.public = true and lines.id = ?", params[:id]).joins(:genes).take
+    @stacks = Stack.where("stacks.public = true and stacks.line_id = ?", @line.id)
   end
 
   def new

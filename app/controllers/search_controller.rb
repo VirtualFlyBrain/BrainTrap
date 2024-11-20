@@ -6,13 +6,9 @@ require 'TreeCache'
 require 'TreeNode'
 
 include ActionView::Helpers::UrlHelper;
-include ActionController::UrlWriter;
 
 class SearchController < ApplicationController
 
-  caches_page :search, :search_form
-  #  before_filter :login_required
-  
   @tree_html = ''
 
   def index
@@ -62,12 +58,12 @@ class SearchController < ApplicationController
           end
         end
       }
-      render_texrender :text => xout
+      render :plain => xout
     else
       # Default output is json format
       # make sure not to send html but text/plain
       headers["Content-Type"] = "text/plain; charset=utf-8" 
-      render :text => matches.to_json
+      render :plain => matches.to_json
     end
   end
     
@@ -85,13 +81,13 @@ class SearchController < ApplicationController
       xml.tree{
         recurse_tree_xml(brain_node, xml)
       }
-      render :text => xout
+      render :plain => xout
     else
       # Default output is json format
       # make sure not to send html but text/plain
 
       headers["Content-Type"] = "text/plain; charset=utf-8" 
-      render :text => brain_node.to_json
+      render :plain => brain_node.to_json
     end
 
   end
@@ -101,8 +97,9 @@ class SearchController < ApplicationController
     if !@node_count
       
       #TODO: find a better way to get this image url
-      @img_dir = url_for :controller => 'images', :only_path => true, :trailing_slash => true
+      @img_dir = "/images/"
       @search_dir = url_for :controller => 'search', :only_path => true, :trailing_slash => true
+      @search_dir = @search_dir.gsub('index/', '')
 
       treeData = TreeCache.instance.getTreeData();
       if treeData != nil
@@ -231,9 +228,6 @@ def interaction_search
     col = row.split(",")
     gene1 = col[0]
     gene2 = col[1]
-    #gene1 = 'Abl'
-    #gene2 = 'fra' #no interactions
-    #gene2 = 'arm' #some interactions
     
     basefids = Array.new
     subcomponents = Array.new
@@ -245,7 +239,7 @@ def interaction_search
       "and genes.gene like '#{gene1}'")
       
     gene1tags = 0
-    if (DATA_ACCESS_HASH && res.length > 0) || (!DATA_ACCESS_HASH && res.num_tuples > 0)
+    if (DATA_ACCESS_HASH && res.ntuples > 0) || (!DATA_ACCESS_HASH && res.num_tuples > 0)
       res.each do |r|
         gene1tags += 1
       end
@@ -257,7 +251,7 @@ def interaction_search
       "and stacks.id = tags.stack_id and tag_term.tag_id = tags.id " +
       "and genes.gene like '#{gene1}'")
       
-    if (DATA_ACCESS_HASH && res.length > 0) || (!DATA_ACCESS_HASH && res.num_tuples > 0)
+    if (DATA_ACCESS_HASH && res.ntuples > 0) || (!DATA_ACCESS_HASH && res.num_tuples > 0)
       res.each do |r|
         if DATA_ACCESS_HASH
           basefids.push(r['term_id'])
@@ -281,7 +275,7 @@ def interaction_search
       "and genes.gene like '#{gene2}'")
       
     gene2tags = 0
-    if (DATA_ACCESS_HASH && res.length > 0) || (!DATA_ACCESS_HASH && res.num_tuples > 0)
+    if (DATA_ACCESS_HASH && res.ntuples > 0) || (!DATA_ACCESS_HASH && res.num_tuples > 0)
       res.each do |r|
         gene2tags += 1
       end
@@ -294,7 +288,7 @@ def interaction_search
   
     basefids = Array.new
     
-    if (DATA_ACCESS_HASH && res.length > 0) || (!DATA_ACCESS_HASH && res.num_tuples > 0)
+    if (DATA_ACCESS_HASH && res.ntuples > 0) || (!DATA_ACCESS_HASH && res.num_tuples > 0)
       res.each do |r|
         if DATA_ACCESS_HASH
           basefids.push(r['term_id'])
@@ -313,13 +307,10 @@ def interaction_search
     end
     
     if match == 0 && gene1tags > 0 && gene2tags > 0
-      #@message += "#{match} region matches for interaction #{gene1}(#{gene1tags}) -- #{gene2}(#{gene2tags})<br/>\n"
       @message += "#{match} region matches for interaction #{gene1} -- #{gene2}<br/>\n"
       suspectcount += 1
     end
         
-    #DEBUG
-    #@message += "<br/>#{all_gene1_fids.join(',')}<br/><br/>#{basefids.join(',')}"
   end
   
   @message += "<br/><br/><b>#{suspectcount} total suspects</b><br/>"
@@ -336,7 +327,7 @@ def interaction_search2
     "left join genes g2 on (g2.genefbgn = fly_gene2) " +
     "where g2.id is not null order by g1.gene, g2.gene");
     
-  if (DATA_ACCESS_HASH && resinter.length > 0) || (!DATA_ACCESS_HASH && resinter.num_tuples > 0)
+  if (DATA_ACCESS_HASH && resinter.ntuples > 0) || (!DATA_ACCESS_HASH && resinter.num_tuples > 0)
     resinter.each do |inter|
       if DATA_ACCESS_HASH
         gene1 = inter['g1id']
@@ -360,7 +351,7 @@ def interaction_search2
         "and genes.id = #{gene1}")
         
       gene1tags = 0
-      if (DATA_ACCESS_HASH && res.length > 0) || (!DATA_ACCESS_HASH && res.num_tuples > 0)
+      if (DATA_ACCESS_HASH && res.ntuples > 0) || (!DATA_ACCESS_HASH && res.num_tuples > 0)
         res.each do |r|
           gene1tags += 1
         end
@@ -372,7 +363,7 @@ def interaction_search2
         "and stacks.id = tags.stack_id and tag_term.tag_id = tags.id " +
         "and genes.id = #{gene1}")
         
-      if (DATA_ACCESS_HASH && res.length > 0) || (!DATA_ACCESS_HASH && res.num_tuples > 0)
+      if (DATA_ACCESS_HASH && res.ntuples > 0) || (!DATA_ACCESS_HASH && res.num_tuples > 0)
         res.each do |r|
           if DATA_ACCESS_HASH
             basefids.push(r['term_id'])
@@ -396,7 +387,7 @@ def interaction_search2
         "and genes.id = #{gene2}")
         
       gene2tags = 0
-      if (DATA_ACCESS_HASH && res.length > 0) || (!DATA_ACCESS_HASH && res.num_tuples > 0)
+      if (DATA_ACCESS_HASH && res.ntuples > 0) || (!DATA_ACCESS_HASH && res.num_tuples > 0)
         res.each do |r|
           gene2tags += 1
         end
@@ -409,7 +400,7 @@ def interaction_search2
     
       basefids = Array.new
       
-      if (DATA_ACCESS_HASH && res.length > 0) || (!DATA_ACCESS_HASH && res.num_tuples > 0)
+      if (DATA_ACCESS_HASH && res.ntuples > 0) || (!DATA_ACCESS_HASH && res.num_tuples > 0)
         res.each do |r|
           if DATA_ACCESS_HASH
             basefids.push(r['term_id'])
@@ -428,15 +419,12 @@ def interaction_search2
       end
       
       if match == 0 && gene1tags > 0 && gene2tags > 0
-        #@message += "#{match} region matches for interaction #{gene1}(#{gene1tags}) -- #{gene2}(#{gene2tags})<br/>\n"
         link1 = link_to(gene1s, :controller => 'stack', :action => 'list', :geneid => gene1)
         link2 = link_to(gene2s, :controller => 'stack', :action => 'list', :geneid => gene2)
         @message += "#{match} region matches for interaction #{link1} -- #{link2}<br/>\n"
         suspectcount += 1
       end
           
-      #DEBUG
-      #@message += "<br/>#{all_gene1_fids.join(',')}<br/><br/>#{basefids.join(',')}"
     end
   end
   
@@ -537,7 +525,6 @@ end
         if level == 0 && (
           (c.name.length > 37 && c.name.index('antennal lobe projection neuron') != nil) ||
           c.name.index('multiglomerular projection neuron') != nil)
-          #puts "Ignoring term #{c.name} at top level."
         else
           recurse_tree_html(c, level+1, parents.clone().push(nodeid))          
         end

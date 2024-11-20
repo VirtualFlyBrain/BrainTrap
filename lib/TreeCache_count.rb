@@ -8,7 +8,7 @@ require 'singleton'
 require 'TreeCache'
 
 # TreeCache is a singleton object to contain a brain ontology tree structure in memory
-class TreeCache
+class TreeCacheCount
   include Singleton
 
   def initialize
@@ -54,7 +54,7 @@ class TreeCache
         'part_of.is_current = true and term.is_current = true ' + \
         'group by term.id, term.name ' + \
         'order by name')
-    if (DATA_ACCESS_HASH && res.length > 0) || (!DATA_ACCESS_HASH && res.num_tuples > 0)
+    if (DATA_ACCESS_HASH && res.ntuples > 0) || (!DATA_ACCESS_HASH && res.num_tuples > 0)
       children = Array.new unless children != nil
       res.each do |r|
         child = TreeNode.new
@@ -78,7 +78,6 @@ class TreeCache
     end
    
     current_node.children = children
-    
   end
   
   def getBrainNode()

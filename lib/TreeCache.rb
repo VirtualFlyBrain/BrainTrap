@@ -26,7 +26,6 @@ class TreeCache
       @brain_node.id = res[0][0]
       @brain_node.name = res[0][1]
     end
-    
     @parent_hash = Hash.new
     
     setAllChildren(@brain_node, conn)
@@ -51,7 +50,7 @@ class TreeCache
         "and part_of.part_of_term_id = '#{current_node.id}' and " + \
         'part_of.is_current = true and term.is_current = true ' + \
         'order by name')
-    if (DATA_ACCESS_HASH && res.length > 0) || (!DATA_ACCESS_HASH && res.num_tuples > 0)
+    if (DATA_ACCESS_HASH && res.ntuples > 0) || (!DATA_ACCESS_HASH && res.num_tuples > 0)
       children = Array.new unless children != nil
       res.each do |r|
         child = TreeNode.new
@@ -73,7 +72,6 @@ class TreeCache
     end
    
     current_node.children = children
-    
   end
   
   def getBrainNode()
