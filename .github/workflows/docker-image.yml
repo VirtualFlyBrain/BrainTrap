@@ -25,3 +25,4 @@ jobs:
         name: virtualflybrain/braintrap
         username: ${{ secrets.DOCKER_HUB_USER }}
         password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+        tag: ${{ steps.branch-name.outputs.branch }}
