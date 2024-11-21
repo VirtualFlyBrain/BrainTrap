@@ -10,7 +10,7 @@ RAILS_GEM_VERSION = '2.1.0' unless defined? RAILS_GEM_VERSION
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
-DATA_IMAGE_FOLDER = 'http://virtualflybrain.org/data/BrainTrap/site-images90/'
+DATA_IMAGE_FOLDER = 'http://fruitfly.inf.ed.ac.uk/cmor2/site-images90/'
 
 DATA_ACCESS_HASH = false
 
