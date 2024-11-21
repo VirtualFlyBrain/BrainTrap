@@ -46,7 +46,6 @@ COPY ./lib/ /braintrap/lib/
 COPY ./public/ /braintrap/app/assets/
 COPY ./public/images/ /braintrap/public/images/
 COPY ./public/cite/ /braintrap/public/cite/
-COPY ./config/application.rb /braintrap/config/application.rb
 
 # Rename all .rhtml to .html.erb
 RUN for f in /braintrap/app/views/*/*.rhtml; do mv -- "$f" "${f%.rhtml}.html.erb"; done
