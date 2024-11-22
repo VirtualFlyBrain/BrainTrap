@@ -41,6 +41,7 @@ RUN mkdir -p $PGDATA \
 # Copy the website
 COPY ./app/ /braintrap/app/
 COPY ./config/environment_new.rb /braintrap/config/environment.rb
+COPY ./config/application.rb /braintrap/config/application.rb
 COPY ./config/routes_new.rb /braintrap/config/routes.rb
 COPY ./lib/ /braintrap/lib/
 COPY ./public/ /braintrap/app/assets/
