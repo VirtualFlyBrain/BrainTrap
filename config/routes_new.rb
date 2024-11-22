@@ -44,6 +44,7 @@ Rails.application.routes.draw do
   # /braintrap path routes
   scope path: '/braintrap' do
     concerns :braintrap_routes
-    root "welcome#index"
+    # Use get instead of root to avoid naming conflict
+    get '/', to: 'welcome#index', as: :braintrap_root
   end
 end
