@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  # Define the common routes that should be available at both root and /braintrap paths
+  concern :braintrap_routes do
     get "feed/index"
     get "feed/line_annotation_xml"
     get "feed/annotations_xml"
@@ -30,6 +32,18 @@ Rails.application.routes.draw do
     get "welcome/about"
     get "welcome/index"
     get "welcome/protocol"
-    get "up" => "rails/health#show", as: :rails_health_check
+  end
+
+  # Health check route
+  get "up" => "rails/health#show", as: :rails_health_check
+
+  # Root path routes
+  concerns :braintrap_routes
+  root "welcome#index"
+
+  # /braintrap path routes
+  scope path: '/braintrap' do
+    concerns :braintrap_routes
     root "welcome#index"
+  end
 end
