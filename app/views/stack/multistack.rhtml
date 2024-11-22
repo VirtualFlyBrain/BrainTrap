@@ -16,10 +16,10 @@
     <%= javascript_include_tag 'multistack2.js' %>
 
     <script type="text/javascript">
-      var channelMap = <%= @channelMap.to_json %>;
+      var channelMap = <%= raw(@channelMap.to_json) %>;
       var numberofChannels = <%= @channelMap.length.to_json %>;
       var circleedit = false;
-      var image_dir = <%= @img_dir.to_json %>
+      var image_dir = <%= raw(@img_dir.to_json) %>
       var stack_depth = <%= @stack[:num_images].to_json %>
       var imagesDirectoryExternal = '<%= "#{DATA_IMAGE_FOLDER}multistack2/" %>';
       var sizestr = '<%= @size %>';
@@ -61,11 +61,11 @@
 
         <p>
           Related links:
-		  <%= link_to('link to this page', :size => params[:size], :invert => params[:invert], :c1 => params[:c1], :c2 => params[:c2], :c3 => params[:c3])%> |
+          <%= link_to('link to this page', :size => params[:size], :invert => params[:invert], :c1 => params[:c1], :c2 => params[:c2], :c3 => params[:c3])%> |
           <%= link_to @stack1.line[:name], :controller => 'line', :action => 'show', :id => @stack1[:line_id] %> |
           <%= link_to @stack2.line[:name], :controller => 'line', :action => 'show', :id => @stack2[:line_id] %> |
           <%= link_to @stack3.line[:name], :controller => 'line', :action => 'show', :id => @stack3[:line_id] %> |
-          <%= link_to 'MultiBrain', :action => 'multibrain' %>
+          <%= link_to 'MultiBrain', :controller => 'multibrain' %>
         </p>
 
       </div>

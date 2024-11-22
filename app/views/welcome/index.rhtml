@@ -1,7 +1,6 @@
 <div class="maintext">
 
   <h2>Fly Brain Protein Trap Database</h2>
-  <!--p>Provided and maintained by <a href="mailto:seymour.kb@ed.ac.uk">Seymour Knowles-Barley</a>.</p-->
 
   <div class="text">
     <p>
@@ -10,7 +9,7 @@
       It consists of a collection of 3D confocal datasets taken from EYFP expressing protein trap
       Drosophila lines from the Cambridge Protein Trap project.
 	  Further details including analysis and discussion of the results are available in the open access publication
-	  <%= external_link_to('BrainTrap: a database of 3D protein expression patterns in the <i>Drosophila</i> brain', 'http://database.oxfordjournals.org/content/2010/baq005.full') %>.
+	  <%= external_link_to 'BrainTrap: a database of 3D protein expression patterns in the <i>Drosophila</i> brain', 'http://database.oxfordjournals.org/content/2010/baq005.full' %>.
     </p>
 
     <p>
@@ -35,6 +34,9 @@
         <li>
           <%= link_to 'List all images', :controller => 'stack', :action => 'list' %>
           currently in the database.
+        </li>
+        <li>
+          <%= link_to 'Use the MultiBrain feature', :controller => 'multibrain' %> to combine selected scans in the same view.
         </li>
       </ul>
     </p>

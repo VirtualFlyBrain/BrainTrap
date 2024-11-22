@@ -20,11 +20,11 @@
       <td><%=h line.name%></td>
       <td><%=h line.gene%></td>
       <td><%=h line.geneid%></td>
-      <!--td><%= link_to 'Images', :controller => 'stack', :stack_line_id => line %></td-->
-      <td><%= link_to 'Details', :action => 'show', :id => line %></td>
+      <!--td><%= link_to 'Images', :controller => 'stack', :stack_line_id => line.id %></td-->
+      <td><%= link_to 'Details', :action => 'show', :id => line.id %></td>
       <td nowrap><%= link_to_flyprot_cpti line.name %></td>
-      <%#td><%= link_to 'Edit', :action => 'edit', :id => line %-></td%>
-      <% # td><%= link_to 'Destroy', { :action => 'destroy', :id => line }, :confirm => 'Are you sure?', :method => :post %-></td %>
+      <%#td><%= link_to 'Edit', :action => 'edit', :id => line.id %-></td%>
+      <% # td><%= link_to 'Destroy', { :action => 'destroy', :id => line.id }, :confirm => 'Are you sure?', :method => :post %-></td %>
     </tr>
   <% end %>
 </table>

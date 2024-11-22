@@ -30,7 +30,7 @@ class FeedController < ApplicationController
                 xml.text(tag.tag)
                 conn = ActiveRecord::Base.connection();
                 @ontology_terms = conn.execute "select tag_term.term_id as fid from tag_term where tag_term.tag_id = #{tag.id}"
-                if  (DATA_ACCESS_HASH && @ontology_terms.length > 0) || (!DATA_ACCESS_HASH && @ontology_terms.num_tuples > 0)
+                if  (DATA_ACCESS_HASH && @ontology_terms.ntuples > 0) || (!DATA_ACCESS_HASH && @ontology_terms.num_tuples > 0)
                   xml.terms{
                     @ontology_terms.each do |fid|
                       if DATA_ACCESS_HASH
@@ -46,7 +46,7 @@ class FeedController < ApplicationController
           end
         end
       end
-    render :text => xout
+    render :plain => xout
   end
   
   def annotations_xml
@@ -71,7 +71,7 @@ class FeedController < ApplicationController
                   xml.text(tag.tag)
                   conn = ActiveRecord::Base.connection();
                   @ontology_terms = conn.execute "select tag_term.term_id as fid from tag_term where tag_term.tag_id = #{tag.id}"
-                  if  (DATA_ACCESS_HASH && @ontology_terms.length > 0) || (!DATA_ACCESS_HASH && @ontology_terms.num_tuples > 0)
+                  if  (DATA_ACCESS_HASH && @ontology_terms.ntuples > 0) || (!DATA_ACCESS_HASH && @ontology_terms.num_tuples > 0)
                     xml.terms{
                       @ontology_terms.each do |fid|
                         if DATA_ACCESS_HASH
@@ -89,7 +89,7 @@ class FeedController < ApplicationController
         end
       end
     }
-    render :text => xout
+    render :plain => xout
   end
   
   def full_xml
@@ -118,7 +118,7 @@ class FeedController < ApplicationController
                     xml.text(tag.tag)
                     conn = ActiveRecord::Base.connection();
                     @ontology_terms = conn.execute "select tag_term.term_id as fid from tag_term where tag_term.tag_id = #{tag.id}"
-                    if  (DATA_ACCESS_HASH && @ontology_terms.length > 0) || (!DATA_ACCESS_HASH && @ontology_terms.num_tuples > 0)
+                    if  (DATA_ACCESS_HASH && @ontology_terms.ntuples > 0) || (!DATA_ACCESS_HASH && @ontology_terms.num_tuples > 0)
                       xml.terms{
                         @ontology_terms.each do |fid|
                           if DATA_ACCESS_HASH
@@ -143,7 +143,7 @@ class FeedController < ApplicationController
         end
       end
     }
-    render :text => xout
+    render :plain => xout
   end
   
 end
