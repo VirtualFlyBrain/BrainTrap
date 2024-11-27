@@ -1,22 +1,12 @@
 class GeneController < ApplicationController
   
-  #before_filter :login_required
-  
   def index
     list
     render :action => 'list'
   end
   
-  # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
-  verify :method => :post, :only => [ :destroy, :create, :update ],
-         :redirect_to => { :action => :list }
-  
   def list
-    #conn = ActiveRecord::Base.connection();
-    #@genes = Line.find_by_sql "select distinct lines.gene, lines.geneid from lines order by gene, geneid"
-    #@genes = Gene.find(:all, :order => 'gene')
     @genes = Gene.find_by_sql('select genes.*, count(genes_lines.line_id) as line_count from genes, genes_lines, lines where genes.id = genes_lines.gene_id and genes_lines.line_id = lines.id and lines.public group by genes.id, genes.gene, genes.geneid, genes.genefbgn order by genes.gene')
-    #@genes = ActiveRecord::Base.connection.execute "select distinct lines.gene, lines.geneid from lines"
   end
   
   def gene_lines
@@ -24,8 +14,6 @@ class GeneController < ApplicationController
   end
   
   def gene_stacks
-    #@lines = Line.find(:all, :conditions => { :geneid => params[:geneid]})
-    #@stacks = Stack.find(:all, :conditions => {:line_id => @lines.id})
     @stacks = Stack.find( :all, :include => :line, :conditions => ['lines.geneid = ? and lines.public = true and stacks.public = true', params[:geneid]] )
   end
   
@@ -93,17 +81,6 @@ class GeneController < ApplicationController
     @genes = Gene.find(params[:compare_id])
     conn = ActiveRecord::Base.connection();
     @tagged = {};
-    
-    # Alternative: could be something like this instead?
-    #    select term.name, genes.geneid from term, tag_term, tags, stacks, genes_lines, genes
-    #    where term.id = tag_term.term_id
-    #    and tag_term.tag_id = tags.id
-    #    and tags.stack_id = stacks.id
-    #    and stacks.line_id = genes_lines.line_id
-    #    and genes_lines.gene_id = genes.id
-    #    and genes.geneid in ('CG11006', 'CG10637')
-    #    group by term.name, genes.geneid
-    #    order by genes.geneid
     
     for gene in @genes do
       ganat = conn.execute "select term.name from term

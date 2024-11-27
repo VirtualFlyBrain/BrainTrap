@@ -1,9 +1,10 @@
 <h2>MultiBrain (beta)</h2>
-<% form_tag_in_block(:action => url_for(:controller => 'stack', :action => 'multistack')) { %>
+<form action="/stack/multistack" method="get">
 <p>
 	Select three images (one in each colour) and view the combined stack by clicking "View MultiBrain".<br/>
 	Can't choose? Click "Random MultiBrain" until you find something you like.<br/>
-	Brains in were registered to a common template using <%= external_link_to('CMTK', "http://www.nitrc.org/projects/cmtk/") %>.
+	Brains in were registered to a common template using
+  <%= external_link_to 'CMTK', 'http://www.nitrc.org/projects/cmtk/' %>.
 </p>
 <p><input type="submit" name="mButton" value="View MultiBrain" /> <input type="submit" name="random" value="Random MultiBrain" /></p>
 <table class="grid" cellspacing="1" cellpadding="0">
@@ -52,8 +53,6 @@
     </td>
   </tr>
 <% end %>
-
-<% } %>
 
 </table>
 <p><input type="submit" name="mButton" value="View MultiBrain" /> <input type="submit" name="random" value="Random MultiBrain" /></p>

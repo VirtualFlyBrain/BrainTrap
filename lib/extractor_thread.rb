@@ -1,4 +1,4 @@
-require '../app/models/stack.rb'
+# require '../app/models/stack.rb'
 
 class ExtractorThread
   def initialize
@@ -78,24 +78,6 @@ class ExtractorThread
           end
           $EXTRACTOR_POINT = '7';
 
-          #TODO: log exec_result
-          #@exec_message = exec_result
-
-          #Image Extraction example:
-          #imgcnv -i H:\testbrains\good\977MaleDualA.lsm -o H:\testbrains\good\977\full\dual.jpg -t jpeg -remap 1,2,1
-          #imgcnv -i H:\testbrains\good\977MaleDualA.lsm -o H:\testbrains\good\977\full\c1.jpg -t jpeg -remap 1,0,1
-          #imgcnv -i H:\testbrains\good\977MaleDualA.lsm -o H:\testbrains\good\977\full\c2.jpg -t jpeg -remap 0,2,0
-          #
-          #imgcnv -i H:\testbrains\good\977MaleDualA.lsm -o H:\testbrains\good\977\768\dual.jpg -t jpeg -remap 1,2,1 -resize 768,,BL
-          #imgcnv -i H:\testbrains\good\977MaleDualA.lsm -o H:\testbrains\good\977\768\c1.jpg -t jpeg -remap 1,0,1 -resize 768,,BL
-          #imgcnv -i H:\testbrains\good\977MaleDualA.lsm -o H:\testbrains\good\977\768\c2.jpg -t jpeg -remap 0,2,0 -resize 768,,BL
-          #
-          #imgcnv -i H:\testbrains\good\977MaleDualA.lsm -o H:\testbrains\good\977\512\dual.jpg -t jpeg -remap 1,2,1 -resize 512,,BL
-          #imgcnv -i H:\testbrains\good\977MaleDualA.lsm -o H:\testbrains\good\977\512\c1.jpg -t jpeg -remap 1,0,1 -resize 512,,BL
-          #imgcnv -i H:\testbrains\good\977MaleDualA.lsm -o H:\testbrains\good\977\512\c2.jpg -t jpeg -remap 0,2,0 -resize 512,,BL
-          #
-          #imgcnv -i H:\testbrains\good\977MaleDualA.lsm -o H:\testbrains\good\977\thumb2.jpg -t jpeg -remap 1,2,1 -resize 256,,BL -page 60
-          #imgcnv -i H:\testbrains\good\977MaleDualA.lsm -o H:\testbrains\good\977\thumb1.jpg -t jpeg -remap 1,2,1 -resize 128,,BL -page 60
 
         end
         $EXTRACTOR_POINT = '8';

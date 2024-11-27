@@ -16,10 +16,10 @@
     <%= javascript_include_tag 'imagestack2.js' %>
 
     <script type="text/javascript">
-      var channelMap = <%= @channelMap.to_json %>;
+      var channelMap = <%= raw(@channelMap.to_json) %>;
       var numberofChannels = <%= @channelMap.length.to_json %>;
       var circleedit = false;
-      var image_dir = <%= @img_dir.to_json %>
+      var image_dir = <%= raw(@img_dir.to_json) %>
       var stack_depth = <%= @stack[:num_images].to_json %>
       var imagesDirectoryExternal = '<%= "#{DATA_IMAGE_FOLDER}#{@stack[:name]}/#{@size}" %>';
       var numberOfChannels = channelMap.length;

@@ -2,17 +2,11 @@ class TagController < ApplicationController
 
   require 'BrainOntologyCache'
 
-  before_filter :login_required
-  
   def index
     redirect_to :controller => "welcome" unless logged_in?
     list
     render :action => 'list'
   end
-
-  # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
-  verify :method => :post, :only => [ :destroy, :create, :update ],
-    :redirect_to => { :action => :list }
 
   def list
     redirect_to :controller => "welcome" unless logged_in?
@@ -35,7 +29,7 @@ class TagController < ApplicationController
     else
       @channelMap = [['Merged', 'merge'],['NC82', 'c1'],['GFP', 'c2']]
     end
-    @img_dir = url_for :controller => 'images', :only_path => true, :trailing_slash => true
+    @img_dir = "/images/"
     #Edit in small size only
     @size = '512'
     @jumpMult = '1.0'
@@ -74,7 +68,7 @@ class TagController < ApplicationController
     else
       @channelMap = [['Merged', 'merge'],['NC82', 'c1'],['GFP', 'c2']]
     end
-    @img_dir = url_for :controller => 'images', :only_path => true, :trailing_slash => true
+    @img_dir = "/images/"
     #Edit in small size only
     @size = '512'
     @jumpMult = '1.0'

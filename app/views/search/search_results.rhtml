@@ -25,17 +25,14 @@
 
         <% if params[:mode] == 'freetext' %>
           <p>
-            <% form_tag_in_block(:action => url_for(:controller => 'search', :action => 'search_results')) { %>
+            <form action="search/search_results" method="get">
               <input name="quick_search" type="text" value="<%= params[:quick_search] %>" class="quicksearch" size="50" />
               <input type="hidden" name="mode" value="freetext" />
-              <!--Match:
-                  <input type="radio" name="match" value="all" checked /> All terms
-                  <input type="radio" name="match" value="any" /> Any terms-->
               <input type="submit" value="Search" />
-            <% } %>
+            </form>
           </p><br/>
         <% else %>
-          <p><%= @search_list %></p>
+          <p><%= raw(@search_list) %></p>
         <% end %>
         
         <% if @stacks != nil %>

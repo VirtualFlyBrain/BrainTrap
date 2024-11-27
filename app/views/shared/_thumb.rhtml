@@ -13,7 +13,7 @@
     <div class="tinfo">
       <ul class="small">
         <%
-        tags = stack.tags.find(:all, 4, :conditions => "active = true")
+        tags = stack.tags.where(active:true).first(4)
         if tags.length > tag_max
           tags = tags [0..tag_max-1]
           tags[tag_max-1].tag = '+ more'

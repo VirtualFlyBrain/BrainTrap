@@ -20,3 +20,8 @@ config.action_view.cache_template_loading            = true
 
 # Disable delivery errors, bad email addresses will be ignored
 # config.action_mailer.raise_delivery_errors = false
+
+config.assume_ssl = false
+config.force_ssl = false
+
+Rails.application.routes.default_url_options[:protocol] = "http"
