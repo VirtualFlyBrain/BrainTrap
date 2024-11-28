@@ -1,5 +1,5 @@
 <div class="mainresults">
-  <div><%= link_to(image_tag('eyfpInsertion.png' , :alt => 'piggyBac YFP insertion', :class => 'yfp_piggybac'), url_for(:controller => 'images', :action => 'eyfpInsertion.png')) %></div>
+  <div><%= link_to(image_tag('eyfpInsertion.png' , :alt => 'piggyBac YFP insertion', :class => 'yfp_piggybac'), image_url('eyfpInsertion.png')) %></div>
   <h2>Project information</h2>
   <p>
     The BrainTrap database contains information on protein expression patterns in the <i>Drosophila Melanogaster</i> brain.
@@ -17,17 +17,17 @@
     More details on each strain and images of other tissue types are available from <%= external_link_to('Flyprot', 'http://www.flyprot.org/') %>.
   </p>
   <p>
-    Strains displayed on this website are available from the <%=external_link_to('Kyoto Stock Center (listing pending)', "http://kyotofly.kit.jp/stocks/documents/CPTI.html")%>
+    Strains displayed on this website are available from the <%=external_link_to('Kyoto Stock Center', "http://kyotofly.kit.jp/stocks/documents/CPTI.html")%>
   </p>
   <div class="breaker"></div>
-  <div><%= link_to(image_tag('eyfpIHC.png' , :alt => 'immunohistochemistry', :class => 'yfp_ihc'), url_for(:controller => 'images', :action => 'eyfpIHC.png')) %></div>
+  <div><%= link_to(image_tag('eyfpIHC.png' , :alt => 'immunohistochemistry', :class => 'yfp_ihc'), image_url('eyfpIHC.png')) %></div>
   <h2>Image acquisition</h2>
   <p>
     Brain images were acquired by Seymour Knowles-Barley, in the
     <%= external_link_to 'Armstrong Lab', 'http://homepages.inf.ed.ac.uk/jda/' %> at the University of Edinburgh.
     Whole brain mounts were imaged by confocal microscopy, with a background immunohistochemical label added to aid the identification of brain structures.
     Additional immunohistochemical labelling of the EYFP protein using an anti-GFP antibody was also used in most cases.
-	Further details are available on the <%= link_to('staining protocol', :action => 'protocol')%> page.
+	Further details are available on the <%= link_to 'staining protocol', :controller => 'welcome', :action => 'protocol' %> page.
   </p>
   <p>
     The trapped protein signal (EYFP / anti-GFP), background signal (NC82 label), and the merged signal can be viewed on the website by using the corresponding channel buttons.
@@ -52,11 +52,11 @@
   	Seymour Knowles-Barley, Mark Longair, and J Douglas Armstrong (2010)
 	BrainTrap: a database of 3D protein expression patterns in the Drosophila brain.
 	Database (Oxford). 2010:baq005, doi: 10.1093/database/baq005.<br/>
-	<%= link_to ('BibTeX', '../cite/BrainTrap.bib') %> | 	 
-	<%= link_to ('RIS', '../cite/BrainTrap.ris') %> | 	 
-	<%= link_to ('EndNote', '../cite/BrainTrap.enw') %> | 	 
-	<%= external_link_to ('Full Text HTML', 'http://database.oxfordjournals.org/content/2010/baq005.full') %> | 	 
-	<%= external_link_to ('Full Text PDF', 'http://database.oxfordjournals.org/content/2010/baq005.full.pdf') %>	 
+	<%= link_to 'BibTeX', '../cite/BrainTrap.bib' %> | 	 
+	<%= link_to 'RIS', '../cite/BrainTrap.ris' %> | 	 
+	<%= link_to 'EndNote', '../cite/BrainTrap.enw' %> | 	 
+	<%= external_link_to 'Full Text HTML', 'http://database.oxfordjournals.org/content/2010/baq005.full' %> | 	 
+	<%= external_link_to 'Full Text PDF', 'http://database.oxfordjournals.org/content/2010/baq005.full.pdf' %>	 
   </p>
   <h2>Funding</h2>
   <p>

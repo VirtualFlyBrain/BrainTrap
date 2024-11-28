@@ -1,17 +1,11 @@
 class StackController < ApplicationController
 
-  layout "stack", :except => [:show, :multistack]
-  
-  #  before_filter :login_required
+  layout "stack", except: [:multistack]
   
   def index
     list
     render :action => 'list'
   end
-
-  # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
-  verify :method => :post, :only => [ :destroy, :create, :update ],
-    :redirect_to => { :action => :list }
 
   def list
     #Defaults
@@ -48,9 +42,6 @@ class StackController < ApplicationController
     end  
     
     @keep_params = {:order => params[:order], :show => params[:show]};
-    #    if params[:stack_line_id] != nil
-    #      line_number = Integer(params[:stack_line_id])
-    #      @stack_pages, @stacks = paginate :stacks, :conditions => "line_id = #{line_number}", :order_by => stacks_order, :per_page => staks_per_page
     if params[:untagged]
       @nstacks = Stack.count_by_sql("select count(*) from stacks left join tags on (stacks.id = tags.stack_id and tags.active = true) join lines on (stacks.line_id = lines.id) where tags.id is null and lines.public = true and stacks.public = true")
       @npages = (@nstacks / stacks_per_page).ceil
@@ -63,44 +54,44 @@ class StackController < ApplicationController
       @keep_params = {:untagged_by_me => 1}
     elsif params[:geneid]
       @gene = Gene.find(params[:geneid].to_i)
-      @nstacks = Stack.count(:all, :include => [{:line => :genes}], :conditions => ['genes.id = ? and lines.public = true and stacks.public = true', params[:geneid].to_i])
+      @nstacks = Stack.count_by_sql("select count(*) from stacks left join lines on (stacks.line_id = lines.id) left join genes_lines on (lines.id = genes_lines.line_id) where stacks.public = true and lines.public = true and genes_lines.gene_id = #{params[:geneid].to_i}")
       @npages = (@nstacks / stacks_per_page).ceil
-      @stacks = Stack.find(:all, :include => [{:line => :genes}], :conditions => ['genes.id = ? and lines.public = true and stacks.public = true', params[:geneid].to_i], :order => stacks_order, :limit => stacks_per_page, :offset => offset)
+      @stacks = Stack.find_by_sql("select stacks.* from stacks left join lines on (stacks.line_id = lines.id) left join genes_lines on (lines.id = genes_lines.line_id) where stacks.public = true and lines.public = true and genes_lines.gene_id = #{params[:geneid].to_i} order by #{stacks_order} limit #{stacks_per_page} offset #{offset}")
       @keep_params = {:geneid => params[:geneid]};
     elsif params[:fbgn]
       @gene = Gene.find(:first, :conditions => ['genes.genefbgn = ?', params[:fbgn]])
-      @nstacks = Stack.count(:all, :include => [{:line => :genes}], :conditions => ['genes.genefbgn = ? and lines.public = true and stacks.public = true', params[:fbgn]])
+      @nstacks = Stack.count_by_sql("select count(*) from stacks left join lines on (stacks.line_id = lines.id) left join genes_lines on (lines.id = genes_lines.line_id) left join genes on (genes_lines.gene_id = genes.id) where stacks.public = true and lines.public = true and genes.genefbgn = #{params[:fbgn]}")
       @npages = (@nstacks / stacks_per_page).ceil
-      @stacks = Stack.find(:all, :include => [{:line => :genes}], :conditions => ['genes.genefbgn = ? and lines.public = true and stacks.public = true', params[:fbgn]], :order => stacks_order, :limit => stacks_per_page, :offset => offset)
+      @stacks = Stack.find_by_sql("select stacks.* from stacks left join lines on (stacks.line_id = lines.id) left join genes_lines on (lines.id = genes_lines.line_id) left join genes on (genes_lines.gene_id = genes.id) where stacks.public = true and lines.public = true and genes.genefbgn = #{params[:fbgn]} order by #{stacks_order} limit #{stacks_per_page} offset #{offset}")
       @keep_params = {:fbgn => params[:fbgn]};
     elsif params[:stack_line_id]
       @line = Line.find(params[:stack_line_id].to_i, :conditions => 'public = true')
-      @nstacks = Stack.count(:all, :include => :line, :conditions => ['lines.id = ? and lines.public = true and stacks.public = true', params[:stack_line_id].to_i])
+      @nstacks = Stack.where(:public => true).joins(:line).where("lines.public = true and lines.id = ?", params[:stack_line_id].to_i).count
       @npages = (@nstacks / stacks_per_page).ceil
-      @stacks = Stack.find(:all, :include => :line, :conditions => ['lines.id = ? and lines.public = true and stacks.public = true', params[:stack_line_id].to_i], :order => stacks_order, :limit => stacks_per_page, :offset => offset)
+      @stacks = Stack.where(:public => true).joins(:line).where("lines.public = true and lines.id = ?", params[:stack_line_id].to_i).order(stacks_order).limit(stacks_per_page).offset(offset)
       @keep_params = {:stack_line_id => params[:stack_line_id]};
     elsif params[:cpti]
       @line = Line.find(:first, :conditions => ['lines.name = ? and public = true', params[:name].to_i])
-      @nstacks = Stack.count(:all, :include => :line, :conditions => ['lines.name = ? and lines.public = true and stacks.public = true', params[:cpti]])
+      @nstacks = Stack.where(:public => true).joins(:line).where("lines.public = true and lines.name = ?", params[:cpti]).count
       @npages = (@nstacks / stacks_per_page).ceil
-      @stacks = Stack.find(:all, :include => :line, :conditions => ['lines.name = ? and lines.public = true and stacks.public = true', params[:cpti]], :order => stacks_order, :limit => stacks_per_page, :offset => offset)
+      @stacks = Stack.where(:public => true).joins(:line).where("lines.public = true and lines.name = ?", params[:cpti]).order(stacks_order).limit(stacks_per_page).offset(offset)
       @keep_params = {:cpti => params[:cpti]};
     else
-      @nstacks = Stack.count(:all, :include => :line, :conditions => ['lines.public = true and stacks.public = true'])
+      @nstacks = Stack.where(:public => true).joins(:line).where("lines.public = true").count
       @npages = (@nstacks / stacks_per_page).ceil
-      @stacks = Stack.find(:all, :include => :line, :conditions => ['lines.public = true and stacks.public = true'], :order => stacks_order, :limit => stacks_per_page, :offset => offset)
+      @stacks = Stack.where(:public => true).joins(:line).where("lines.public = true").limit(stacks_per_page).offset(offset)
     end
   end
 
   def show
-    @stack = Stack.find(params[:id], :include => [{:line => :genes}], :conditions => 'public = true')
-    @stackPrefix = DATA_IMAGE_FOLDER + "#{@stack[:name]}/"
+    @stack = Stack.where("stacks.public = true and stacks.id = ?", params[:id]).joins(:line).where("lines.public = true").take
+    @stackPrefix = DATA_IMAGE_FOLDER + "#{@stack.name}/"
     if @stack.num_channels == 1
       @channelMap = [['GFP', 'c1']]
     else
       @channelMap = [['Merged', 'merge'],['NC82', 'c1'],['GFP', 'c2']]
     end
-    @img_dir = url_for :controller => 'images', :only_path => true, :trailing_slash => true
+    @img_dir = "/images/"
     case params[:size]
     when 'full'
       @size = 'full'
@@ -112,26 +103,29 @@ class StackController < ApplicationController
       @size = '512'
       @jumpMult = '1.0'
     end
+    render layout: false
+    return
   end
 
   def multistack
     @cmy = params[:cmy] != nil
     @invert = params[:invertoff] == nil && params[:invert] != nil
     if params[:random] != nil
-      allstacks = Stack.find(:all, :conditions => 'stacks.multibrain = true and public = true')
+      allstacks = Stack.where('stacks.multibrain = true and public = true')
       params[:c1] = allstacks[rand(allstacks.length)][:id]
       params[:c2] = allstacks[rand(allstacks.length)][:id]
       params[:c3] = allstacks[rand(allstacks.length)][:id]
       redirect_to(:size => params[:size], :invert => params[:invert], :c1 => params[:c1], :c2 => params[:c2], :c3 => params[:c3])
+      return
     end
-    @stack = Stack.find(559, :include => [{:line => :genes}], :conditions => 'stacks.multibrain = true and public = true')
+    @stack = Stack.where('stacks.id = 559 and stacks.multibrain = true and stacks.public = true').joins(:line).take
     if params[:c1] == nil || params[:c1] == '' || params[:c1] == 'nc82'
       @stack1 = @stack.clone()
       @stack1[:name] = '2226MaleDualA-nc82'
       @stack1.line[:name] = 'nc82'
       @stack1.line[:gene] = 'brp'
     else
-      @stack1 = Stack.find(params[:c1], :include => [{:line => :genes}], :conditions => 'stacks.multibrain = true and public = true')
+      @stack1 = Stack.where('stacks.id = ? and stacks.multibrain = true and stacks.public = true', params[:c1].to_i).joins(:line).take
     end
     if params[:c2] == nil || params[:c2] == '' || params[:c2] == 'nc82'
       @stack2 = @stack.clone()
@@ -139,22 +133,22 @@ class StackController < ApplicationController
       @stack2.line[:name] = 'nc82'
       @stack2.line[:gene] = 'brp'
     else
-      @stack2 = Stack.find(params[:c2], :include => [{:line => :genes}], :conditions => 'stacks.multibrain = true and public = true')
+      @stack2 = Stack.where('stacks.id = ? and stacks.multibrain = true and stacks.public = true', params[:c2].to_i).joins(:line).take
     end
-     if params[:c3] == nil || params[:c3] == '' || params[:c3] == 'nc82'
+    if params[:c3] == nil || params[:c3] == '' || params[:c3] == 'nc82'
       @stack3 = @stack.clone()
       @stack3[:name] = '2226MaleDualA-nc82'
       @stack3.line[:name] = 'nc82'
       @stack3.line[:gene] = 'brp'
     else
-      @stack3 = Stack.find(params[:c3], :include => [{:line => :genes}], :conditions => 'stacks.multibrain = true and public = true')
+      @stack3 = Stack.where('stacks.id = ? and stacks.multibrain = true and stacks.public = true', params[:c3].to_i).joins(:line).take
     end
     
     @channelMap = [['Merged', 'merge'],
       [@stack1.line[:gene] == nil ? @stack1.line[:name] : @stack1.line[:gene], @stack1[:name]],
       [@stack2.line[:gene] == nil ? @stack2.line[:name] : @stack2.line[:gene], @stack2[:name]],
       [@stack3.line[:gene] == nil ? @stack3.line[:name] : @stack3.line[:gene], @stack3[:name]]]
-    @img_dir = url_for :controller => 'images', :only_path => true, :trailing_slash => true
+    @img_dir = "/images/"
     case params[:size]
     when 'full'
       @size = 'full'
@@ -166,6 +160,8 @@ class StackController < ApplicationController
       @size = '512'
       @jumpMult = '1.0'
     end
+    render layout: false
+    return
   end
 
   def new
@@ -248,8 +244,6 @@ class StackController < ApplicationController
           :max_res_x => @width, :max_res_y => @height, :comments => '', \
           :line_id => @line_id, :dateadded => Time.now, :num_channels => @channels)
 
-      #TODO: start extractor thread???
-      
     end
 
     if @stack.save

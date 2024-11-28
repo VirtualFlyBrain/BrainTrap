@@ -13,9 +13,9 @@
   </span>
 
   <span><b>Size:</b>
-    <%= @size=='512' ? '<span class="selected">medium</span>' : link_to('medium', :size => '512') %>
-    <%= @size=='768' ? '<span class="selected">large</span>' : link_to('large', :size => '768') %>
-    <%= @size=='full' ? '<span class="selected">full</span>' : link_to('full', :size => 'full') %>
+    <%= @size=='512' ? raw('<span class="selected">medium</span>') : link_to('medium', :size => '512', :id => @stack.id) %>
+    <%= @size=='768' ? raw('<span class="selected">large</span>') : link_to('large', :size => '768', :id => @stack.id) %>
+    <%= @size=='full' ? raw('<span class="selected">full</span>') : link_to('full', :size => 'full', :id => @stack.id) %>
   </span>
 
   <span id="channel"><b>Channel:</b>

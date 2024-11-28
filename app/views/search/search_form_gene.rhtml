@@ -7,11 +7,11 @@
     <title>Anatomy Ontology Gene Search</title>
   <%= javascript_include_tag 'predict-search.js' %>
     <script type="text/javascript">
-      var all_nodes = <%= @all_nodes.to_json %>;
-      var collapse_nodes = <%= @collapse_nodes.to_json %>;
-      var fid_to_nodes = <%= @fid_to_nodes.to_json %>;
-      var node_parents = <%= @node_parents.to_json %>;
-      var string_to_fid = <%= @string_to_fid.to_json %>;
+      var all_nodes = <%= raw(@all_nodes.to_json) %>;
+      var collapse_nodes = <%= raw(@collapse_nodes.to_json) %>;
+      var fid_to_nodes = <%= raw(@fid_to_nodes.to_json) %>;
+      var node_parents = <%= raw(@node_parents.to_json) %>;
+      var string_to_fid = <%= raw(@string_to_fid.to_json) %>;
     </script>
   </head>
   
@@ -46,11 +46,9 @@
             <div id="ontology-tree">
              <form action="search_results_gene" method="get">
                <div class="tree">
-                 <%= @tree_html %>
+                 <%= raw(@tree_html) %>
                </div>
-               <!--a href="javascript:check_all()" >Check All</a-->
                <a href="javascript:clear_all()" >Clear All </a>
-               <!--input type="submit" value="Tree Search" /-->
               </form>
             </div>
           </div>

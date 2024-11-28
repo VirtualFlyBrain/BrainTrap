@@ -15,8 +15,9 @@ Syntax recommendation http://www.w3.org/TR/REC-CSS2/
 
 * {font-family: verdana, arial, helvetica, sans-serif;}
 
-body {text-align: left; margin:0px; height:100%; background-color: #ccc; background-image:url('../images/stripe6.png');
-    font-size:15px;}
+html { height: 100%; background-color: #ccc; background-image:url('../images/stripe6.png'); }
+
+body {text-align: left; margin:0px; height:100%; font-size:15px;}
 
 a { text-decoration:none; color: #7777ff; }
 a:hover { text-decoration:none; color: #4444ff; }

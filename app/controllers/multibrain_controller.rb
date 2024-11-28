@@ -20,7 +20,7 @@ class MultibrainController < ApplicationController
       stacks_order = "stacks.dateadded desc, stacks.id desc"
     end  
     
-    @stacks = Stack.find(:all, :include => :line, :conditions => ['stacks.multibrain = true and lines.public = true and stacks.public = true'], :order => stacks_order)
+    @stacks = Stack.where(:multibrain => true, :public => true).joins(:line).where("lines.public = true").order(stacks_order)
     
   end
   

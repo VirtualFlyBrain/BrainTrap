@@ -1,5 +1,5 @@
 <%if @page > 1 %>
-  <%= link_to '&lt; Previous', { :page => @page - 1, :params => @keep_params } %>
+  <%= link_to raw('&lt; Previous'), { :page => @page - 1, :params => @keep_params } %>
 <% else %>
   <span class="disabled">&lt; Previous</span>
 <% end %>
@@ -13,7 +13,7 @@
 <% end %>
 
 <% if @page < @npages %>
-  <%= link_to 'Next &gt;', { :page => @page + 1, :params => @keep_params } %>
+  <%= link_to raw('Next &gt;'), { :page => @page + 1, :params => @keep_params } %>
 <% else %>
   <span class="disabled">Next &gt;</span>
 <% end %>
