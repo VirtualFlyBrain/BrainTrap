@@ -1,5 +1,7 @@
 # BrainTrap
 
+[![DOI](https://zenodo.org/badge/24147051.svg)](https://zenodo.org/badge/latestdoi/24147051)
+
 BrainTrap is a database of 3D protein expression patterns in the Drosophila brain, providing interactive visualization and exploration of confocal datasets showing reporter gene expression and protein localization.
 
 ## Overview
